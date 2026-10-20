@@ -439,44 +439,59 @@ const HeartlyAiAssistant = {
     }
   },
 
+  cleanTags(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/<think>[\s\S]*?<\/think>/gi, '')
+      .replace(/\[\/?(CONVERSATION|COPYABLE|THINK|REASONING)\]/gi, '')
+      .trim();
+  },
+
   parseBotPayload(payload) {
     if (typeof payload === 'object' && payload !== null) {
-      let intro = (payload.intro || '').trim();
-      let copyable = (payload.copyable || '').trim();
-      const rawResult = (payload.result || payload.fullText || '').trim();
+      let intro = this.cleanTags(payload.intro || '');
+      let copyable = this.cleanTags(payload.copyable || '');
+      const rawResult = this.cleanTags(payload.result || payload.fullText || '');
 
       if (!intro && !copyable && rawResult) {
         return this.parseBotString(rawResult);
       }
       return {
-        intro,
-        copyable: copyable || rawResult,
-        fullText: payload.fullText || rawResult,
+        intro: intro || (copyable ? '' : rawResult),
+        copyable,
+        fullText: rawResult || intro,
       };
     }
     return this.parseBotString(String(payload || ''));
   },
 
   parseBotString(str) {
-    const text = str.trim();
-    // 1. Tagged format [CONVERSATION]...[/CONVERSATION] [COPYABLE]...[/COPYABLE]
-    const convMatch = text.match(/\[CONVERSATION\]([\s\S]*?)\[\/CONVERSATION\]/i);
-    const copyMatch = text.match(/\[COPYABLE\]([\s\S]*?)\[\/COPYABLE\]/i);
+    const text = String(str || '').trim();
+    // 1. Tagged format [CONVERSATION]... [COPYABLE]...
+    const convMatch = text.match(/\[CONVERSATION\]([\s\S]*?)(?:\[\/CONVERSATION\]|$)/i);
+    const copyMatch = text.match(/\[COPYABLE\]([\s\S]*?)(?:\[\/COPYABLE\]|$)/i);
     if (copyMatch) {
       return {
-        intro: convMatch ? convMatch[1].trim() : '',
-        copyable: copyMatch[1].trim(),
-        fullText: text,
+        intro: convMatch ? this.cleanTags(convMatch[1]) : '',
+        copyable: this.cleanTags(copyMatch[1]),
+        fullText: this.cleanTags(text),
+      };
+    }
+    if (convMatch && !copyMatch) {
+      return {
+        intro: this.cleanTags(convMatch[1]),
+        copyable: '',
+        fullText: this.cleanTags(convMatch[1]),
       };
     }
 
-    // 2. Colon separator heuristic (e.g. "Of course! Here is a sweet note for you:\n\n...")
+    // 2. Colon separator heuristic (e.g. "Here is what was requested:\n\n...")
     const colonSplit = text.split(/:\s*\n+/);
-    if (colonSplit.length > 1 && colonSplit[0].length < 160 && !colonSplit[0].includes('\n')) {
+    if (colonSplit.length > 1 && colonSplit[0].length < 120 && !colonSplit[0].includes('\n')) {
       return {
-        intro: colonSplit[0].trim() + ':',
-        copyable: colonSplit.slice(1).join('\n\n').trim(),
-        fullText: text,
+        intro: this.cleanTags(colonSplit[0]),
+        copyable: this.cleanTags(colonSplit.slice(1).join('\n\n')),
+        fullText: this.cleanTags(text),
       };
     }
 
@@ -484,13 +499,14 @@ const HeartlyAiAssistant = {
     const quoteMatch = text.match(/^([^\n"]+[:!])?\s*["“]([\s\S]+?)["”]\s*$/);
     if (quoteMatch && quoteMatch[2]) {
       return {
-        intro: (quoteMatch[1] || '').trim(),
-        copyable: quoteMatch[2].trim(),
-        fullText: text,
+        intro: this.cleanTags(quoteMatch[1] || ''),
+        copyable: this.cleanTags(quoteMatch[2]),
+        fullText: this.cleanTags(text),
       };
     }
 
-    return { intro: '', copyable: text, fullText: text };
+    // Default: conversational response with no copy box
+    return { intro: this.cleanTags(text), copyable: '', fullText: this.cleanTags(text) };
   },
 
   appendMessage(sender, payload, isError = false) {
@@ -531,8 +547,8 @@ const HeartlyAiAssistant = {
         ? `
         <div class="ema-copyable-card">
           <div class="ema-copyable-header">
-            <span class="ema-copyable-tag">💌 Ready to send</span>
-            <button type="button" class="btn-ema-msg-copy" title="Copy only the ready-to-send text">
+            <span class="ema-copyable-tag">✨ Ready to copy</span>
+            <button type="button" class="btn-ema-msg-copy" title="Copy ready-to-use expression">
               📋 Copy Text
             </button>
           </div>
@@ -540,7 +556,7 @@ const HeartlyAiAssistant = {
         </div>
       `
         : `
-        <div class="ema-msg-text">${this.formatEmaText(parsed.fullText)}</div>
+        <div class="ema-msg-text">${this.formatEmaText(parsed.intro || parsed.fullText)}</div>
       `;
 
       msgDiv.innerHTML = `
@@ -563,7 +579,7 @@ const HeartlyAiAssistant = {
             }, 2000);
 
             if (window.HeartlyDialog) {
-              HeartlyDialog.toast('📋 Copied message text without introductory words!', 'success');
+              HeartlyDialog.toast('📋 Copied expression to clipboard!', 'success');
             }
           });
         });
