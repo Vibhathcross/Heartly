@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heartly — Private Sanctuary for Two</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Dancing+Script:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="alternate icon" type="image/png" href="/app-icon.png">
+  <link rel="shortcut icon" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#ff4d6d">
+</head>
+<body>
+
+  <!-- 0. INTRO / SPLASH SCREEN WITH ROMANTIC MOTTO & ANIMATED LOGO -->
+  <div id="heartlyIntroOverlay" class="intro-overlay">
+    <div class="intro-card">
+      <div class="intro-top-row">
+        <span class="intro-version-pill" id="introAppVersion">v1.2.0</span>
+      </div>
+      <div class="intro-logo-wrap">
+        <div class="intro-heart-halo"></div>
+        <div class="cssload-wrapper">
+          <!-- From Uiverse.io by SouravBandyopadhyay --> 
+          <div class="cssload-main">
+            <div class="cssload-heart">
+              <span class="cssload-heartL"></span>
+              <span class="cssload-heartR"></span>
+              <span class="cssload-square"></span>
+            </div>
+            <div class="cssload-shadow"></div>
+          </div>
+        </div>
+        <div class="intro-floating-particles">
+          <span class="particle p-1">💖</span>
+          <span class="particle p-2">✨</span>
+          <span class="particle p-3">💕</span>
+          <span class="particle p-4">🌸</span>
+          <span class="particle p-5">❤️</span>
+        </div>
+      </div>
+      <h1 class="intro-app-title">
+        <span class="title-char" style="--i:0">H</span>
+        <span class="title-char" style="--i:1">e</span>
+        <span class="title-char" style="--i:2">a</span>
+        <span class="title-char" style="--i:3">r</span>
+        <span class="title-char" style="--i:4">t</span>
+        <span class="title-char" style="--i:5">l</span>
+        <span class="title-char" style="--i:6">y</span>
+      </h1>
+      <div class="intro-heart-divider">
+        <span class="intro-divider-line"></span>
+        <span class="intro-divider-icon">❦</span>
+        <span class="intro-divider-line"></span>
+      </div>
+      <p class="intro-motto-romantic">"Where two hearts beat in silence, and eternal love speaks in whispers."</p>
+      <div class="intro-bottom-pill">
+        <span class="intro-pulse-indicator"></span>
+        <span>Opening your private sanctuary...</span>
+      </div>
+      <button type="button" id="btnSkipIntro" class="intro-skip-btn">Click anywhere or Esc to enter →</button>
+    </div>
+  </div>
+
+  <!-- 1. SPACE APP-OPENING MASTER PASSCODE UNLOCK SCREEN -->
+  <div id="unlockScreen" class="auth-fullscreen-overlay" style="display: none;">
+    <div class="auth-wrapper">
+      <div class="brand-header">
+        <div class="brand-logo-container">
+          <img src="/images/logo.png" alt="Heartly Logo" class="brand-logo-img">
+        </div>
+        <h2 class="brand-title" id="unlockSpaceName">Unlock Space</h2>
+        <p class="brand-subtitle">Enter your secret Master Space Passcode to enter Heartly</p>
+      </div>
+      <form id="unlockForm">
+        <div id="unlockFeedback" class="auth-feedback-banner error" style="display: none;"></div>
+        <div class="form-group">
+          <label class="form-label">Space Master Passcode</label>
+          <input type="password" id="unlockPasscode" class="form-input" placeholder="Enter your couple passcode" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-primary">❤️ Unlock Sanctuary</button>
+        <button type="button" id="btnSwitchAccount" class="btn-secondary" style="margin-top: 10px; color: #ff4d6d; border-color: rgba(255, 77, 109, 0.35);">🚪 Log Out of Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. LOGIN / SIGNUP / PAIRING ONBOARDING SCREEN -->
+  <div id="authScreen" class="auth-fullscreen-overlay" style="display: none;">
+    <div class="auth-wrapper">
+      <div class="brand-header">
+        <div class="brand-logo-container">
+          <img src="/images/logo.png" alt="Heartly Logo" class="brand-logo-img pulse-anim">
+        </div>
+        <h1 class="brand-title">Heartly</h1>
+        <p class="brand-subtitle">An end-to-end private sanctuary for two lovers</p>
+      </div>
+
+      <!-- Toggle Auth / Space Mode -->
+      <div id="authTabs" style="display: flex; gap: 8px; margin-bottom: 20px;">
+        <button type="button" class="btn-secondary" id="tabLogin" style="margin-top:0; flex:1; font-weight: 700;">Login</button>
+        <button type="button" class="btn-secondary" id="tabRegister" style="margin-top:0; flex:1;">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <div id="loginFeedback" class="auth-feedback-banner" style="display: none;"></div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="you@love.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Account Password</label>
+          <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary">Log In</button>
+        <button type="button" class="btn-secondary" id="btnGoToRegister">Don't have an account? Register here →</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" style="display: none;">
+        <div id="registerFeedback" class="auth-feedback-banner" style="display: none;"></div>
+        <div class="form-group">
+          <label class="form-label">Your Name / Nickname</label>
+          <input type="text" id="regName" class="form-input" placeholder="e.g. Leo" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="regEmail" class="form-input" placeholder="you@love.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Account Password</label>
+          <input type="password" id="regPassword" class="form-input" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary">Create Personal Account</button>
+        <button type="button" class="btn-secondary" id="btnBackToLoginFromReg">← Back to Login</button>
+      </form>
+
+      <!-- Space Setup (After login if no space) -->
+      <div id="spaceSetupSection" style="display: none; margin-top: 15px;">
+        <div id="spaceSetupNotice" class="auth-feedback-banner success" style="display: none;"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h3 style="font-size: 16px; color: var(--primary);">Couple Space Setup</h3>
+          <button type="button" id="btnLogoutFromSpaceSetup" style="background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 12px; font-weight: 700;">← Log out / Switch Account</button>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+          <button id="btnShowCreateSpace" class="btn-secondary" style="margin:0; flex:1; font-weight: 700;">Create Space</button>
+          <button id="btnShowJoinSpace" class="btn-secondary" style="margin:0; flex:1;">Join with Code</button>
+        </div>
+
+        <!-- Create Space Form -->
+        <form id="createSpaceForm">
+          <div id="createSpaceFeedback" class="auth-feedback-banner" style="display: none;"></div>
+          <div class="form-group">
+            <label class="form-label">Couple Space Name</label>
+            <input type="text" id="newSpaceName" class="form-input" placeholder="e.g. Maya & Leo" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Master Space Password (Required on App Launch)</label>
+            <input type="password" id="newSpacePasscode" class="form-input" placeholder="Unique secret code only you two know" required>
+          </div>
+          <button type="submit" class="btn-primary">Create Our Space</button>
+          <button type="button" class="btn-secondary" id="btnSwitchToJoin">Have a partner code? Join Space instead →</button>
+        </form>
+
+        <!-- Join Space Form -->
+        <form id="joinSpaceForm" style="display: none;">
+          <div id="joinSpaceFeedback" class="auth-feedback-banner" style="display: none;"></div>
+          <div class="form-group">
+            <label class="form-label">6-Character Partner Pairing Code</label>
+            <input type="text" id="joinPairingCode" class="form-input" placeholder="e.g. LOVE24" maxlength="8" style="text-transform: uppercase;" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Master Space Password</label>
+            <input type="password" id="joinSpacePasscode" class="form-input" placeholder="The passcode your partner set" required>
+          </div>
+          <button type="submit" class="btn-primary">Join Partner's Space</button>
+          <button type="button" class="btn-secondary" id="btnSwitchToCreate">← Back to Create New Space</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MAIN APP INTERFACE WITH REALISTIC WINDOWSIDE DESK & DUSK PLUM SIDEBAR -->
+  <div id="mainApp" class="sunset-app-layout" style="display: none;">
+    <!-- Photorealistic Sunset Bay Window Backdrop Layer -->
+    <div class="sunset-window-backdrop">
+      <div class="window-ivy-leaves"></div>
+      <div class="window-candle-glow"></div>
+    </div>
+
+    <!-- Left Velvet Plum Sidebar ("Shared Dreams") -->
+    <!-- Left Velvet Twilight Sidebar (Aligned with User's Stars, Moon & Keepsake Image) -->
+    <aside class="sidebar-plum-nav stars-moon-theme">
+      <!-- Navigation Menu at the TOP (Main Stack on Left + Vertical Personal Space Button on Right) -->
+      <div class="sidebar-nav-wrapper">
+        <nav class="sidebar-menu">
+          <button type="button" class="sidebar-nav-item active" id="tabDreams" title="Shared Dreams & Clothesline">
+            <span class="nav-label">Dreams</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" id="tabGallery" title="Our Memory Timeline">
+            <span class="nav-label">Our Gallery</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" id="tabChat" title="Private Messages & Whispers">
+            <span class="nav-label">Messages</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" id="tabScratchbook" title="Collaborative Scrapbook & Canvas">
+            <span class="nav-label">Scratchbook</span>
+          </button>
+          <button type="button" class="sidebar-nav-item" id="tabDates" title="Date Calendar & Proposals">
+            <span class="nav-label">Date Calendar</span>
+          </button>
+        </nav>
+
+        <!-- Vertical Personal Space Navigation Button (Right Side of Buttons) -->
+        <button type="button" class="sidebar-nav-vertical" id="tabPersonal" title="My Personal Space (Private & Hidden from Partner)">
+          <div class="vertical-nav-inner">
+            <span class="vertical-nav-label">Personal Space</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Bottom Keepsake Showcase (leaves the candle & framed Polaroid from the image visible) -->
+      <div class="sidebar-bottom-showcase">
+        <!-- Floating Message Popup Toggle Switch (Per user in space, near Heartbeat button) -->
+        <div class="sidebar-toggle-row" id="floatingToggleRow" title="Toggle floating message preview at bottom left">
+          <div class="toggle-info-label">
+            <span class="toggle-icon">💬</span>
+            <span class="toggle-text">Message Popup</span>
+          </div>
+          <div class="checkbox-wrapper-5">
+            <div class="check">
+              <input type="checkbox" id="toggleFloatingChat" checked>
+              <label for="toggleFloatingChat"></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-actions-compact">
+          <button type="button" class="btn-send-love" id="btnSendHeartbeat" style="--i:#a955ff;--j:#ea51ff;" title="Send Love to your partner">
+            <span class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+              </svg>
+            </span>
+            <span class="title">send love</span>
+          </button>
+          <button type="button" class="btn-sidebar-compact btn-lock-compact" id="btnLockApp" title="Lock App with Master Passcode">
+            🔒 Lock
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Stage on the Sunset Windowsill -->
+    <div class="sunset-content-stage">
+      
+      <!-- Top Transparent Glassmorphic Header -->
+      <header class="sunset-stage-header">
+        <div class="stage-header-titles">
+          <h1 class="stage-universe-title">Our Little Universe <span class="universe-heart">♡</span></h1>
+          <p class="stage-universe-subtitle">"Where two hearts beat in silence, and eternal love speaks in whispers."</p>
+        </div>
+
+        <div class="stage-header-couples">
+          <!-- Small Golden Metallic "Reserved" Badge -->
+          <div id="coupleCombinedBadge" class="couple-combined-badge golden-metallic" style="display: none;" title="This private sanctuary is permanently reserved for you two only.">
+            <span class="badge-lock">🔒</span>
+            <span class="badge-reserved-tag">RESERVED</span>
+            <span id="coupleCombinedNames" class="combined-names">Exclusive Duo</span>
+          </div>
+
+          <!-- Pairing Code Badge (If single user) -->
+          <div id="pairingCodeBadge" class="pairing-code-badge" style="display: none;"></div>
+
+          <!-- Side-by-side Avatar Circles separated by vertical divider -->
+          <div class="header-couple-avatars-divider">
+            <!-- User Avatar (Editable) -->
+            <div class="top-avatar-circle avatar-you" id="avatarYouBtn" title="Your Profile (Click to change photo)">
+              <img id="headerAvatarYouImg" src="" alt="You" style="display: none;" />
+              <span id="headerAvatarYouFallback">👤</span>
+              <div class="avatar-edit-overlay" title="Click to upload your new photo">
+                <span>📷</span>
+              </div>
+            </div>
+
+            <!-- Border Only Outline Heart Divider -->
+            <div class="top-avatar-heart-divider" title="Two hearts united">
+              <svg class="heart-outline-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </div>
+
+            <!-- Partner Avatar (View Only) -->
+            <div class="top-avatar-circle avatar-partner" id="avatarPartnerBtn" title="Partner Profile">
+              <img id="headerAvatarPartnerImg" src="" alt="Partner" style="display: none;" />
+              <span id="headerAvatarPartnerFallback">👧</span>
+            </div>
+
+            <!-- Hidden file input for uploading own avatar -->
+            <input type="file" id="userAvatarFileInput" accept="image/*" style="display: none;">
+          </div>
+
+          <span class="partner-status" id="partnerStatusIndicator" style="margin-left: 6px;">
+            <span id="partnerStatusDot" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:#a0969a; transition: all 0.3s ease;"></span>
+            <span id="partnerStatusText" style="font-size: 11px;">Partner offline</span>
+          </span>
+        </div>
+      </header>
+
+      <!-- Main Section Container (Holds active tab section) -->
+      <main class="sunset-main-deck" id="mainDeckContainer">
+        
+        <!-- ==================== TAB 0: SHARED DREAMS & CLOTHESLINE ==================== -->
+        <section id="dreamsSection" class="sunset-tab-section active">
+          <!-- 1. The Rustic Clothesline of Dreams (Hero String View) -->
+          <div class="clothesline-hero-wrapper">
+            <!-- Jute Twine Line across window -->
+            <div class="clothesline-jute-twine"></div>
+
+            <!-- Hanging Clothespin Cards Container (Horizontally Scrollable) -->
+            <div class="clothesline-cards-scroll" id="clotheslineCardsContainer">
+              <!-- Dynamically populated hanging pastel cards -->
+            </div>
+
+            <!-- Floating "+ Hang a Dream" Button -->
+            <button type="button" class="btn-hang-a-dream" id="btnHangADream">
+              <span class="hang-btn-sparkle">✨</span>
+              <span class="hang-btn-text">+ Hang a Dream</span>
+            </button>
+          </div>
+
+          <!-- 2. Lower Warm Parchment Deck & Scenery Cards -->
+          <div class="dreams-lower-deck">
+            <div class="dreams-deck-header">
+              <!-- Category Filter Chips -->
+              <div class="dream-deck-filter-pills">
+                <button type="button" class="dream-deck-filter-chip active" data-filter="all">
+                  <span class="chip-icon">🪟</span> All Dreams
+                </button>
+                <button type="button" class="dream-deck-filter-chip" data-filter="mine">
+                  <span class="chip-icon">👤</span> My Dreams
+                </button>
+                <button type="button" class="dream-deck-filter-chip" data-filter="hers">
+                  <span class="chip-icon">👧</span> Their Dreams
+                </button>
+                <button type="button" class="dream-deck-filter-chip" data-filter="completed">
+                  <span class="chip-icon">✓</span> Completed
+                </button>
+              </div>
+
+              <div class="deck-scroll-hint">
+                <span>← Scroll for more →</span>
+              </div>
+            </div>
+
+            <!-- Lower Horizontal Deck Cards Carousel -->
+            <div class="dreams-deck-cards-row" id="dreamDeckCardsList">
+              <!-- Dynamically populated photorealistic cards + "+ Add your dream here" slot -->
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== TAB 1: GALLERY & MEMORIES ==================== -->
+        <section id="gallerySection" class="sunset-tab-section" style="display: none;">
+        <div class="gallery-top-bar">
+          <div>
+            <h2 style="font-size: 22px; font-weight: 800; color: var(--text-main);">Our Memory Timeline</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Our beautiful moments, dates, reactions &amp; sweet comments preserved forever ❤️</p>
+          </div>
+          <button class="btn-action-pill" id="btnOpenUploadModal" style="background: var(--primary); color: white; border: none; padding: 10px 18px;">
+            ➕ Add Memory
+          </button>
+        </div>
+
+        <!-- Expanding Genre Filter Bar -->
+        <div class="gallery-genre-bar" id="galleryGenreBar">
+          <div class="genre-bar-label">🏷️ Genres:</div>
+          <div class="genre-filter-scroll" id="genreFilterScroll">
+            <button type="button" class="genre-filter-chip active" data-genre="all">✨ All Memories</button>
+            <!-- Dynamically populated genre filter chips -->
+          </div>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Dynamically populated memory cards -->
+        </div>
+      </section>
+
+      <!-- TAB 2: COLLABORATIVE SCRATCHBOOK -->
+      <section id="scratchbookSection" style="display: none;">
+        <div class="scratchbook-container">
+          <!-- Scratchbook Books & Canvas Header Bar -->
+          <div class="scratch-book-header-bar">
+            <div class="scratch-book-info-group">
+              <button type="button" class="btn-scratch-book-select" id="btnBrowseScratchbooks" title="View all saved scrapbooks">
+                📚 <span id="btnBrowseScratchbooksText">Saved Scrapbooks</span> ▾
+              </button>
+              <div class="scratch-title-container">
+                <span id="scratchbookTitleText" class="scratchbook-current-title" title="Current Scrapbook">Our Shared Scratchbook</span>
+                <button type="button" id="btnRenameCurrentBook" class="btn-subtle-edit" title="Rename this scrapbook">✏️</button>
+              </div>
+              <button type="button" class="btn-action-pill btn-new-book" id="btnNewScratchbook" title="Create a new scrapbook">
+                ➕ New Book
+              </button>
+            </div>
+
+            <div class="scratch-bg-color-group">
+              <span class="scratch-bg-label">🎨 Canvas Bg:</span>
+              <div class="scratch-bg-dots" id="scratchBgPalette">
+                <span class="scratch-bg-dot active" data-color="#ffffff" style="background:#ffffff;" title="Pure White"></span>
+                <span class="scratch-bg-dot" data-color="#fff9f0" style="background:#fff9f0;" title="Warm Cream"></span>
+                <span class="scratch-bg-dot" data-color="#fff0f3" style="background:#fff0f3;" title="Blush Rose"></span>
+                <span class="scratch-bg-dot" data-color="#fdf6e2" style="background:#fdf6e2;" title="Vintage Parchment"></span>
+                <span class="scratch-bg-dot" data-color="#f8f4ff" style="background:#f8f4ff;" title="Lavender Dream"></span>
+                <span class="scratch-bg-dot" data-color="#f0fbf7" style="background:#f0fbf7;" title="Mint Breeze"></span>
+                <span class="scratch-bg-dot" data-color="#1e1e24" style="background:#1e1e24;" title="Midnight Velvet"></span>
+              </div>
+              <input type="color" id="canvasBgColorPicker" value="#ffffff" class="canvas-bg-picker" title="Pick Custom Background Color">
+            </div>
+          </div>
+
+          <!-- Enhanced Toolbar -->
+          <div class="scratch-toolbar">
+            <!-- Brush Types -->
+            <div class="tool-group">
+              <button class="tool-btn active" id="toolBrushPen" data-brush="pen" title="Fine Pen">✏️ Pen</button>
+              <button class="tool-btn" id="toolBrushHighlighter" data-brush="highlighter" title="Marker / Highlighter">🖌️ Marker</button>
+              <button class="tool-btn" id="toolBrushCalligraphy" data-brush="calligraphy" title="Calligraphy Brush">✨ Calligraphy</button>
+              <button class="tool-btn" id="toolBrushEraser" data-brush="eraser" title="Eraser">🧽 Eraser</button>
+            </div>
+
+            <!-- Size Slider & Preview -->
+            <div class="tool-group" style="gap: 6px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">SIZE:</span>
+              <input type="range" id="brushSizeSlider" min="2" max="44" value="4" style="width: 75px; accent-color: var(--primary); cursor: pointer;" title="Brush Size">
+              <span class="brush-size-preview" id="brushSizePreview" style="width: 6px; height: 6px;"></span>
+            </div>
+
+            <!-- Color Palette & Picker -->
+            <div class="tool-group">
+              <div class="brush-color-dots">
+                <span class="brush-color-dot active" data-color="#ff4d6d" style="background:#ff4d6d;" title="Romantic Rose"></span>
+                <span class="brush-color-dot" data-color="#e74c3c" style="background:#e74c3c;" title="Scarlet Red"></span>
+                <span class="brush-color-dot" data-color="#ff758c" style="background:#ff758c;" title="Coral Pink"></span>
+                <span class="brush-color-dot" data-color="#a370f7" style="background:#a370f7;" title="Lavender Violet"></span>
+                <span class="brush-color-dot" data-color="#f5cd79" style="background:#f5cd79;" title="Sunset Gold"></span>
+                <span class="brush-color-dot" data-color="#2ed573" style="background:#2ed573;" title="Mint Green"></span>
+                <span class="brush-color-dot" data-color="#54a0ff" style="background:#54a0ff;" title="Sky Blue"></span>
+                <span class="brush-color-dot" data-color="#2d3436" style="background:#2d3436;" title="Midnight Charcoal"></span>
+              </div>
+              <input type="color" id="brushColor" value="#ff4d6d" style="width:26px; height:26px; border:none; border-radius:50%; cursor:pointer;" title="Custom Color">
+            </div>
+
+            <!-- Add Media & Notes -->
+            <div class="tool-group">
+              <button class="tool-btn" id="toolAddSticky">📝 Sticky</button>
+              <button class="tool-btn" id="toolAddPolaroid">📸 Polaroid</button>
+              <input type="file" id="polaroidFileInput" accept="image/*" style="display:none;">
+              <button class="tool-btn" id="toolRecordVoice">🎙️ Voice Clip</button>
+              <button class="tool-btn" id="toolToggleStickers" title="Browse romantic stickers &amp; emojis">✨ Stickers</button>
+            </div>
+
+            <!-- Clear Canvas -->
+            <div class="tool-group">
+              <button class="tool-btn" id="btnClearScratchbook" style="color: #e74c3c;" title="Clear entire canvas">🗑️ Clear</button>
+            </div>
+          </div>
+
+          <!-- Glassmorphic Sticker Expansion Entity -->
+          <div id="glassmorphicStickerPicker" class="glass-sticker-picker" style="display: none;">
+            <div class="glass-picker-header">
+              <div class="glass-picker-title">
+                <span>✨ Romantic Stickers &amp; Emojis</span>
+                <span class="glass-picker-sub">Click any emoji to place on canvas</span>
+              </div>
+              <button id="btnCloseStickerPicker" class="btn-close-picker" title="Close">&times;</button>
+            </div>
+            <div class="glass-picker-content" id="glassPickerContent">
+              <!-- Dynamically rendered categorized stickers -->
+            </div>
+          </div>
+
+          <!-- Live Canvas Surface with Realistic Scratched Paper Texture -->
+          <div class="canvas-wrapper" id="canvasWrapper">
+            <div class="scratch-paper-texture-layer" id="scratchPaperTextureLayer"></div>
+            <canvas id="scratchCanvas"></canvas>
+            <div id="canvasElementsOverlay"></div>
+
+            <!-- Drag to Delete Drop Zone (Bottom Right) -->
+            <div id="canvasDeleteZone" class="canvas-delete-zone">
+              <span class="delete-zone-icon">🗑️</span>
+              <span class="delete-zone-text">Drop here to delete</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: PRIVATE COUPLE CHAT -->
+      <section id="chatSection" style="display: none;">
+        <div class="chat-container">
+          <!-- Shared Wallpaper Background Dual Layers (for smooth cross-fade) -->
+          <div id="chatWallpaperLayer" class="chat-wallpaper-layer"></div>
+          <div id="chatWallpaperLayerNext" class="chat-wallpaper-layer next"></div>
+
+          <div class="chat-header">
+            <div>
+              <h3 style="font-size: 17px; font-weight: 700; color: var(--primary);">Private Whispers</h3>
+              <p style="font-size: 12px; color: var(--text-muted);">Encrypted &amp; private for just the two of you ❤️</p>
+            </div>
+            <div class="chat-header-actions">
+              <button type="button" class="btn-chat-header-action" id="btnTogglePinnedMessages" title="View Pinned Whispers">
+                📌 Pinned <span class="pinned-badge-count" id="chatPinnedCount">0</span>
+              </button>
+              <button type="button" class="btn-chat-header-action" id="btnAdjustChatBg" title="Adjust chat background zoom & view area">
+                🔍 Adjust View
+              </button>
+              <button type="button" class="btn-chat-header-action" id="btnOpenWallpaperModal" title="Customize Shared Chat Wallpaper">
+                🎨 Wallpaper
+              </button>
+              <button type="button" class="btn-chat-header-action" id="btnOpenMagicWordsModal" title="Manage customized romantic phrases & magical effects">
+                ✨ Magic Words
+              </button>
+              <span class="chat-two-only-pill">🔒 Two-Only</span>
+            </div>
+          </div>
+
+          <!-- Floating Chat Background Zoom & View Area Adjustment Panel -->
+          <div id="chatBgAdjustPanel" class="chat-bg-adjust-panel" style="display: none;">
+            <div class="bg-adjust-header">
+              <span>🖼️ Adjust Chat Background View</span>
+              <button type="button" class="btn-close-adjust" id="btnCloseAdjustBg">&times;</button>
+            </div>
+            <div class="bg-adjust-body">
+              <div class="adjust-control-group">
+                <div class="adjust-label-row">
+                  <span>🔍 Zoom Scale</span>
+                  <span id="chatBgZoomVal">100%</span>
+                </div>
+                <input type="range" id="chatBgZoomSlider" min="100" max="250" step="5" value="100" class="adjust-slider">
+              </div>
+              <div class="adjust-control-group">
+                <div class="adjust-label-row">
+                  <span>↔️ Horizontal View (Pan X)</span>
+                  <span id="chatBgPanXVal">50%</span>
+                </div>
+                <input type="range" id="chatBgPanXSlider" min="0" max="100" step="1" value="50" class="adjust-slider">
+              </div>
+              <div class="adjust-control-group">
+                <div class="adjust-label-row">
+                  <span>↕️ Vertical View (Pan Y)</span>
+                  <span id="chatBgPanYVal">50%</span>
+                </div>
+                <input type="range" id="chatBgPanYSlider" min="0" max="100" step="1" value="50" class="adjust-slider">
+              </div>
+              <div class="bg-adjust-footer">
+                <button type="button" class="btn-adjust-reset" id="btnResetChatBg">↺ Reset</button>
+                <button type="button" class="btn-adjust-save" id="btnSaveChatBg">Done ✓</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Love Particle Burst Overlay Container -->
+          <div id="chatParticleBurstContainer" class="chat-particle-burst-container"></div>
+
+          <!-- Modern Realistic HTML5 Canvas Fireworks Engine -->
+          <canvas id="chatFireworksCanvas" class="chat-fireworks-canvas"></canvas>
+
+          <!-- Pinned Messages Slide-Down Drawer -->
+          <div id="chatPinnedDrawer" class="chat-pinned-drawer" style="display: none;">
+            <div class="chat-pinned-drawer-header">
+              <div class="chat-pinned-drawer-title">
+                <span>📌 Pinned Whispers</span>
+                <span class="chat-pinned-sub" id="chatPinnedDrawerSubtitle">0 pinned messages</span>
+              </div>
+              <button type="button" id="btnClosePinnedDrawer" class="chat-pinned-drawer-close" title="Close Pinned Whispers">&times;</button>
+            </div>
+            <div class="chat-pinned-list" id="chatPinnedList">
+              <!-- Dynamically rendered pinned items -->
+            </div>
+          </div>
+
+          <!-- Messages scroll area -->
+          <div class="chat-messages" id="chatMessages">
+            <!-- Messages rendered by ChatManager -->
+          </div>
+
+          <div class="typing-indicator" id="chatTypingIndicator"></div>
+
+          <!-- Image Attachment Preview Tray -->
+          <div id="chatImagePreviewTray" class="chat-image-preview-tray" style="display: none;">
+            <div class="chat-preview-thumb-wrap">
+              <img id="chatPreviewThumb" src="" alt="Attached image preview">
+              <button type="button" id="btnCancelChatImage" class="chat-preview-cancel-btn" title="Remove image">&times;</button>
+            </div>
+            <div class="chat-preview-info">
+              <span id="chatPreviewFileName" class="chat-preview-name">photo.jpg</span>
+              <span class="chat-preview-hint">Photo ready to send with your whisper</span>
+            </div>
+          </div>
+
+          <!-- Emoji Picker Drawer (WhatsApp Style) -->
+          <div id="chatEmojiDrawer" class="chat-emoji-drawer" style="display: none;">
+            <div class="emoji-drawer-header">
+              <div class="emoji-drawer-tabs">
+                <button type="button" class="emoji-tab-btn active" data-cat="love">💖 Love</button>
+                <button type="button" class="emoji-tab-btn" data-cat="smileys">😊 Faces</button>
+                <button type="button" class="emoji-tab-btn" data-cat="gestures">👍 Hands</button>
+                <button type="button" class="emoji-tab-btn" data-cat="fun">🎉 Fun</button>
+              </div>
+              <button type="button" id="btnCloseEmojiDrawer" class="emoji-drawer-close">&times;</button>
+            </div>
+            <div class="emoji-drawer-grid" id="chatEmojiGrid">
+              <!-- Emojis injected dynamically -->
+            </div>
+          </div>
+
+          <!-- Audio Recording Live Bar -->
+          <div id="chatAudioRecordBar" class="chat-audio-record-bar" style="display: none;">
+            <div class="audio-record-live-indicator">
+              <span class="record-pulse-dot"></span>
+              <span id="chatRecordTimer">0:00</span>
+              <span class="record-live-text">Recording voice whisper...</span>
+            </div>
+            <div class="audio-record-actions">
+              <button type="button" id="btnCancelAudioRecord" class="btn-record-cancel" title="Discard">🗑️ Discard</button>
+              <button type="button" id="btnSendAudioRecord" class="btn-record-send" title="Send Voice Note">Send 💌</button>
+            </div>
+          </div>
+
+          <!-- WhatsApp-Style Message Reply Banner -->
+          <div id="chatReplyPreviewBar" class="chat-reply-preview-bar" style="display: none;">
+            <div class="chat-reply-accent-bar"></div>
+            <div class="chat-reply-content">
+              <div class="chat-reply-to-user" id="chatReplyToUser">Replying to Partner</div>
+              <div class="chat-reply-snippet" id="chatReplySnippet">Original message preview...</div>
+            </div>
+            <div id="chatReplyThumbWrap" class="chat-reply-thumb-wrap" style="display: none;">
+              <img id="chatReplyThumb" src="" alt="Replied thumbnail">
+            </div>
+            <button type="button" id="btnCancelChatReply" class="chat-reply-cancel-btn" title="Cancel Reply">✕</button>
+          </div>
+
+          <!-- Chat Input -->
+          <form class="chat-input-bar" id="chatForm">
+            <button type="button" class="chat-tool-btn" id="btnChatEmojiPicker" title="Insert Emoji">
+              😊
+            </button>
+            <button type="button" class="chat-tool-btn" id="btnChatAttachImage" title="Attach Photo">
+              📷
+            </button>
+            <button type="button" class="chat-tool-btn" id="btnChatRecordAudio" title="Record Voice Whisper">
+              🎙️
+            </button>
+            <input type="file" id="chatImageInput" accept="image/*" style="display: none;">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Type a sweet message..." autocomplete="off">
+            <button type="submit" class="btn-primary" id="btnSendChat" style="width: auto; padding: 12px 22px; border-radius: 24px;">Send 💌</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- TAB 4: DATE CALENDAR & PLANNER -->
+      <section id="datesSection" style="display: none;">
+        <div class="gallery-top-bar">
+          <div>
+            <h2 style="font-size: 22px; font-weight: 800; color: var(--text-main);">Our Date Calendar</h2>
+            <p style="font-size: 13px; color: var(--text-muted);">Plan dates together: propose an idea, and once accepted, it locks into your calendar! ❤️</p>
+          </div>
+          <button class="btn-action-pill" id="btnOpenProposeModal" style="background: var(--primary); color: white; border: none; padding: 10px 18px;">
+            💌 Propose a Date
+          </button>
+        </div>
+
+        <!-- Pending Date Request Banner (if any) -->
+        <div id="pendingDateRequestsContainer"></div>
+
+        <!-- Calendar + Upcoming Dates Layout -->
+        <div class="dates-layout">
+          <!-- Calendar Card -->
+          <div class="calendar-card">
+            <div class="calendar-header">
+              <h3 id="calMonthYearLabel" style="font-size: 17px; font-weight: 700; color: var(--primary);">Month Year</h3>
+              <div style="display: flex; gap: 6px;">
+                <button class="cal-nav-btn" id="calPrevMonth">&lt;</button>
+                <button class="cal-nav-btn" id="calNextMonth">&gt;</button>
+              </div>
+            </div>
+
+            <!-- Calendar Day Labels -->
+            <div class="cal-grid" style="margin-bottom: 6px;">
+              <div class="cal-day-header">SUN</div>
+              <div class="cal-day-header">MON</div>
+              <div class="cal-day-header">TUE</div>
+              <div class="cal-day-header">WED</div>
+              <div class="cal-day-header">THU</div>
+              <div class="cal-day-header">FRI</div>
+              <div class="cal-day-header">SAT</div>
+            </div>
+
+            <!-- Dynamic Calendar Days Grid -->
+            <div class="cal-grid" id="calDaysGrid"></div>
+          </div>
+
+          <!-- Upcoming Scheduled Dates List -->
+          <div>
+            <h3 style="font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 14px;">Scheduled Dates & Plans</h3>
+            <div id="upcomingDatesList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TAB 5: PERSONAL SPACE (PRIVATE SANCTUARY) ==================== -->
+      <section id="personalSpaceSection" class="sunset-tab-section" style="display: none;">
+        <!-- Top Glassmorphic Privacy Header Bar -->
+        <div class="personal-top-bar">
+          <div class="personal-title-wrap">
+            <div class="personal-badge-private">
+              <span class="badge-lock-icon">🔒</span>
+              <span>STRICT SEPARATION · 100% PRIVATE TO YOU</span>
+            </div>
+            <h2 class="personal-welcome-title">Welcome to your personal space, <span id="personalSpaceUserName">Love</span> 🗝️</h2>
+            <p class="personal-welcome-sub">This sanctuary belongs solely to you. Your partner has their own separate personal space and can never see your scheduled popups, private journal, secret gift ideas, or scratchpad.</p>
+          </div>
+        </div>
+
+        <!-- Internal Navigators (Sub-tabs: Popup Scheduler, Personal Diary, Moments I Never Forget) -->
+        <div class="personal-sub-nav-bar" id="personalSubNavBar">
+          <button type="button" class="personal-sub-nav-btn active" data-subview="popups">
+            <span class="sub-nav-icon">💌</span>
+            <span class="sub-nav-text">Popup Scheduler</span>
+          </button>
+          <button type="button" class="personal-sub-nav-btn" data-subview="diary">
+            <span class="sub-nav-icon">📖</span>
+            <span class="sub-nav-text">Personal Diary</span>
+          </button>
+          <button type="button" class="personal-sub-nav-btn" data-subview="moments">
+            <span class="sub-nav-icon">✨</span>
+            <span class="sub-nav-text">Moments I Never Forget</span>
+          </button>
+        </div>
+
+        <!-- ================= SUBVIEW 1: POPUP SCHEDULER ================= -->
+        <div class="personal-sub-view active" id="subviewPopups">
+          <div class="personal-subview-header">
+            <div class="subview-header-info">
+              <h3 class="subview-title">💌 Scheduled Popups for Your Partner</h3>
+              <p class="subview-desc">Schedule heartfelt popup surprises (birthday wishes, anniversary greetings, or loving letters). When your partner opens Heartly on that day, this greeting will display throughout the day until dismissed.</p>
+            </div>
+            <button type="button" class="btn-personal-action-main" id="btnOpenSchedulePopupModal">
+              ✨ + Schedule Surprise Popup
+            </button>
+          </div>
+
+          <!-- List of Scheduled Popups -->
+          <div class="personal-popups-grid" id="personalPopupsList">
+            <!-- Dynamically rendered popup cards -->
+          </div>
+        </div>
+
+        <!-- ================= SUBVIEW 2: PERSONAL LINED DIARY ================= -->
+        <div class="personal-sub-view" id="subviewDiary" style="display: none;">
+          <div class="personal-subview-header">
+            <div class="subview-header-info">
+              <h3 class="subview-title">📖 Personal Lined Diary</h3>
+              <p class="subview-desc">Your private ruled notebook. Create and save separate lined diaries with unique names — completely encrypted and 100% hidden from your partner.</p>
+            </div>
+            <button type="button" class="btn-personal-action-main" id="btnCreateNewDiary">
+              ✍️ + New Lined Diary
+            </button>
+          </div>
+
+          <!-- Dual-Pane Lined Diary Book Interface -->
+          <div class="lined-diary-workspace">
+            <!-- Left Column: Saved Diaries Shelf -->
+            <div class="lined-diary-shelf">
+              <div class="shelf-header">
+                <span class="shelf-title">📚 My Saved Diaries</span>
+                <span class="shelf-count-badge" id="diaryShelfCount">0 diaries</span>
+              </div>
+              <div class="shelf-diaries-list" id="diaryShelfList">
+                <!-- Dynamically rendered diary book spine cards -->
+              </div>
+            </div>
+
+            <!-- Right Column: The Authentic Lined Paper Stage -->
+            <div class="lined-diary-stage">
+              <!-- Notebook Paper Sheet -->
+              <div class="lined-notebook-sheet">
+                <!-- Red margin line on left & punched holes -->
+                <div class="notebook-holes">
+                  <div class="notebook-hole"></div>
+                  <div class="notebook-hole"></div>
+                  <div class="notebook-hole"></div>
+                </div>
+                <div class="notebook-red-margin"></div>
+
+                <!-- Lined Paper Sheet Inner Content -->
+                <div class="notebook-content-area">
+                  <!-- Header: Date, Mood & Actions -->
+                  <div class="notebook-meta-row">
+                    <div class="notebook-date-wrap">
+                      <span class="notebook-date-icon">🗓️</span>
+                      <span id="linedDiaryDateDisplay" class="notebook-date-text">Today</span>
+                    </div>
+
+                    <div class="notebook-mood-selector">
+                      <label class="notebook-mood-label">Vibe:</label>
+                      <select id="linedDiaryMoodSelect" class="notebook-mood-dropdown">
+                        <option value="🌸 Peaceful">🌸 Peaceful</option>
+                        <option value="💖 In Love">💖 In Love</option>
+                        <option value="🌙 Night Thoughts">🌙 Night Thoughts</option>
+                        <option value="☕ Cozy & Warm">☕ Cozy & Warm</option>
+                        <option value="💭 Nostalgic">💭 Nostalgic</option>
+                        <option value="✨ Inspired">✨ Inspired</option>
+                        <option value="🌧️ Bittersweet">🌧️ Bittersweet</option>
+                      </select>
+                    </div>
+
+                    <div class="notebook-actions">
+                      <button type="button" class="btn-diary-icon-action" id="btnDeleteCurrentDiary" title="Delete this diary" style="display: none;">
+                        🗑️ Delete
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Diary Name Input (Ruled Top Line) -->
+                  <div class="notebook-title-row">
+                    <input 
+                      type="text" 
+                      id="inputLinedDiaryName" 
+                      class="notebook-name-input" 
+                      placeholder="Diary Name (e.g. Whispers in the Rain, Why I Fell For You)..." 
+                      maxlength="70"
+                      autocomplete="off"
+                    >
+                  </div>
+
+                  <!-- Ruled Lined Writing Canvas Area -->
+                  <div class="notebook-ruled-body">
+                    <textarea 
+                      id="inputLinedDiaryBody" 
+                      class="notebook-lined-textarea" 
+                      placeholder="Pour your thoughts onto the ruled pages... Each thought is protected in your private sanctuary."
+                    ></textarea>
+                  </div>
+
+                  <!-- Notebook Footer: Word Count & Save Status -->
+                  <div class="notebook-footer-bar">
+                    <div class="notebook-status-info">
+                      <span id="linedDiarySavedStatus" class="notebook-save-indicator">🔒 Encrypted in your private vault</span>
+                      <span id="linedDiaryWordCount" class="notebook-word-counter">0 words</span>
+                    </div>
+
+                    <div class="notebook-save-btn-wrap">
+                      <button type="button" class="btn-save-lined-diary" id="btnSaveLinedDiary">
+                        💾 Save Diary 🔒
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= SUBVIEW 3: MOMENTS I NEVER FORGET ================= -->
+        <div class="personal-sub-view" id="subviewMoments" style="display: none;">
+          <div class="personal-subview-header">
+            <div class="subview-header-info">
+              <h3 class="subview-title">✨ Moments I Never Forget</h3>
+              <p class="subview-desc">Milestones, memories, and moments that struck deep into your heart. Store photos, thoughts, voice notes, locations, and group them into custom memory classes.</p>
+            </div>
+            <div class="subview-header-actions" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <button type="button" class="btn-personal-action-secondary" id="btnOpenMomentsClassesModal">
+                🏷️ Classes & Categories
+              </button>
+              <button type="button" class="btn-personal-action-main" id="btnOpenAddMomentModal">
+                ✨ + Add Unforgettable Moment
+              </button>
+            </div>
+          </div>
+
+          <!-- Memory Classes Quick Filter Bar -->
+          <div class="moments-filter-bar" id="momentsClassFilterBar">
+            <!-- Dynamically populated class filter pills -->
+          </div>
+
+          <!-- Moments Cards Grid -->
+          <div class="moments-cards-grid" id="momentsCardsGrid">
+            <!-- Dynamically rendered memory cards -->
+          </div>
+        </div>
+      </section>
+
+      </main> <!-- /sunset-main-deck -->
+    </div> <!-- /sunset-content-stage -->
+  </div> <!-- /mainApp -->
+
+  <!-- MODAL: HANG A NEW DREAM (Realistic Clothesline Note) -->
+  <div class="modal-overlay" id="hangDreamModal" style="display: none;">
+    <div class="modal-card hang-dream-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 800; color: var(--primary);">✨ Hang a Dream on Our Line</h3>
+          <p style="margin: 4px 0 0; font-size: 12.5px; color: var(--text-muted);">Write a heartfelt dream, trip, or goal for our future together ♡</p>
+        </div>
+        <button type="button" id="btnCloseHangModal" class="modal-close">&times;</button>
+      </div>
+
+      <form id="formHangDream" class="hang-dream-form">
+        <div class="form-group">
+          <label class="form-label">Dream Title</label>
+          <input type="text" id="inputDreamTitle" class="form-input" placeholder="e.g. Visit Japan together, Watch the northern lights..." required maxlength="60">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Sweet Note / What we'll do ♡</label>
+          <textarea id="inputDreamDesc" class="form-input" rows="2" placeholder="e.g. Explore new places, try street food and take a thousand memories..."></textarea>
+        </div>
+
+        <!-- Color Palette for Clothesline Paper Note -->
+        <div class="form-group">
+          <label class="form-label">Paper Card Color</label>
+          <div class="dream-color-palette-picker">
+            <span class="dream-color-option active" data-color="pink" style="background: #ffd6df;" title="Soft Blush Pink"></span>
+            <span class="dream-color-option" data-color="blue" style="background: #d8eeff;" title="Sky Blue"></span>
+            <span class="dream-color-option" data-color="yellow" style="background: #fff0bd;" title="Buttercream Gold"></span>
+            <span class="dream-color-option" data-color="purple" style="background: #ecdcfc;" title="Lavender Violet"></span>
+            <span class="dream-color-option" data-color="green" style="background: #dff5e1;" title="Sage Green"></span>
+            <span class="dream-color-option" data-color="peach" style="background: #ffe3d1;" title="Warm Peach"></span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Icon / Symbol</label>
+            <input type="text" id="inputDreamIcon" class="form-input" value="✨" maxlength="4" style="text-align: center; font-size: 18px;" title="Emoji icon">
+          </div>
+          <div class="form-group" style="flex: 2;">
+            <label class="form-label">Target Date (Optional)</label>
+            <input type="date" id="inputDreamDate" class="form-input">
+          </div>
+        </div>
+
+        <!-- Category & Who is this for? -->
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <div class="dream-category-chips-row">
+            <button type="button" class="dream-category-chip active" data-category="romantic">💖 Romantic</button>
+            <button type="button" class="dream-category-chip" data-category="travel">✈️ Travel</button>
+            <button type="button" class="dream-category-chip" data-category="home">🏡 Home</button>
+            <button type="button" class="dream-category-chip" data-category="experience">⛰️ Adventure</button>
+            <button type="button" class="dream-category-chip" data-category="growth">🌱 Growth</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Who is this dream for?</label>
+          <div class="dream-author-pills-row">
+            <button type="button" class="dream-author-pill active" data-author="Both">👩‍❤️‍👨 Both of Us</button>
+            <button type="button" class="dream-author-pill" data-author="You">👤 You</button>
+            <button type="button" class="dream-author-pill" data-author="Her">👧 Her</button>
+          </div>
+        </div>
+
+        <!-- Custom Dream Photo Upload (Optional - No preseeded stock images) -->
+        <div class="form-group">
+          <label class="form-label">Dream Photo (Optional - Add your own picture)</label>
+          <div class="dream-photo-uploader-box" id="dreamPhotoDropZone">
+            <input type="file" id="inputDreamPhotoFile" accept="image/*" style="display: none;">
+            <div id="dreamPhotoPlaceholder" class="dream-photo-placeholder" onclick="document.getElementById('inputDreamPhotoFile').click()">
+              <span class="upload-icon">📷</span>
+              <span class="upload-text">Click to choose a photo for this dream</span>
+              <span class="upload-hint">Upload your own real photo (leave empty for a pure note card)</span>
+            </div>
+            <div id="dreamPhotoPreviewWrap" class="dream-photo-preview-wrap" style="display: none;">
+              <img id="dreamPhotoPreview" src="" alt="Dream Preview" class="dream-photo-preview-img">
+              <button type="button" id="btnRemoveDreamPhoto" class="btn-remove-dream-photo" title="Remove photo">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn-secondary" id="btnCancelHangModal">Cancel</button>
+          <button type="submit" id="btnSaveHangDream" class="btn-primary" style="width: auto; padding: 10px 24px;">Pin to Clothesline 🪢</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: PROPOSE A DATE -->
+  <div class="modal-overlay" id="proposeDateModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 18px; font-weight: 700; color: var(--primary);">Propose a Date Plan</h3>
+        <button class="modal-close" id="btnCloseProposeModal">&times;</button>
+      </div>
+      <form id="proposeDateForm">
+        <div class="form-group">
+          <label class="form-label">Date Title / Activity</label>
+          <input type="text" id="dateInputTitle" class="form-input" placeholder="e.g. Candlelight Dinner, Sunset Picnic" required>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Date</label>
+            <input type="date" id="dateInputDate" class="form-input" required>
+          </div>
+          <div class="form-group" style="width: 120px;">
+            <label class="form-label">Time</label>
+            <input type="time" id="dateInputTime" class="form-input" value="19:00" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location (Optional)</label>
+          <input type="text" id="dateInputLocation" class="form-input" placeholder="e.g. Favorite Italian Bistro">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Special Notes / Sweet Words</label>
+          <textarea id="dateInputNotes" class="form-input" rows="2" placeholder="e.g. Wear your favorite dress! Surprise dessert planned ❤️"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Send Date Invitation to Partner ❤️</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MEMORY PHOTO -->
+  <div class="modal-overlay" id="uploadModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 18px; font-weight: 700; color: var(--primary);">Add a New Memory</h3>
+        <button class="modal-close" id="btnCloseUploadModal">&times;</button>
+      </div>
+      <form id="uploadMemoryForm">
+        <div class="form-group">
+          <label class="form-label">Select Photo</label>
+          <input type="file" id="memoryFile" class="form-input" accept="image/*" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Memory Date (When was this?)</label>
+          <input type="date" id="memoryDate" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Caption / Memory Story</label>
+          <textarea id="memoryCaption" class="form-input" rows="3" placeholder="Tell the story behind this moment..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location (Optional)</label>
+          <input type="text" id="memoryLocation" class="form-input" placeholder="e.g. Central Park, New York">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Genre / Tag (Optional)</label>
+          <input type="text" id="memoryGenre" class="form-input" placeholder="e.g. Date Night, Anniversary, Travel, Beach Day">
+        </div>
+        <button type="submit" class="btn-primary" id="btnUploadSubmit">Save to Our Gallery ❤️</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ENLARGED PHOTO LIGHTBOX VIEWER -->
+  <div class="lightbox-overlay" id="lightboxModal" style="display: none;">
+    <button class="lightbox-close-btn" id="lightboxCloseBtn" title="Close (Esc)">&times;</button>
+    <button class="lightbox-nav-btn lightbox-prev-btn" id="lightboxPrevBtn" title="Previous photo">&lsaquo;</button>
+    <button class="lightbox-nav-btn lightbox-next-btn" id="lightboxNextBtn" title="Next photo">&rsaquo;</button>
+
+    <div class="lightbox-content">
+      <div class="lightbox-image-container">
+        <img class="lightbox-img" id="lightboxImg" src="" alt="Enlarged Memory">
+      </div>
+      <div class="lightbox-caption-card">
+        <span class="lightbox-date-badge" id="lightboxDateBadge">📅 DATE</span>
+        <div class="lightbox-desc" id="lightboxCaptionText">Caption description appears here</div>
+        <div class="lightbox-meta-row" id="lightboxMetaRow">
+          <span id="lightboxAuthorText">Added by</span>
+          <span id="lightboxLocationText" style="display: none;">📍</span>
+          <button class="btn-action-pill" id="lightboxDeleteBtn" style="color: #e74c3c; border-color: #ffd1d8; padding: 4px 12px; font-size: 12px;" title="Delete this memory">
+            🗑️ Delete Memory
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scratchbook Element Context Menu (Right-Click on Any Element) -->
+  <div id="stickyContextMenu" class="floating-context-menu" style="display: none;">
+    <div class="context-menu-header">
+      <span id="scratchContextMenuTitle">✨ Element Settings</span>
+    </div>
+
+    <!-- 1. Layer Order Section (Front, Forward, Backward, Back) -->
+    <div class="context-menu-section">
+      <div class="context-section-label">Layer Arrangement 📑</div>
+      <div class="context-layer-grid">
+        <button type="button" class="btn-context-chip" id="btnLayerFront" title="Bring to Front (Top Layer)">
+          <span>⏫</span> To Front
+        </button>
+        <button type="button" class="btn-context-chip" id="btnLayerForward" title="Bring Forward (One Step Up)">
+          <span>▲</span> Forward
+        </button>
+        <button type="button" class="btn-context-chip" id="btnLayerBackward" title="Send Backward (One Step Down)">
+          <span>▼</span> Backward
+        </button>
+        <button type="button" class="btn-context-chip" id="btnLayerBack" title="Send to Back (Bottom Layer)">
+          <span>⏬</span> To Back
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Rotation Controls Section -->
+    <div class="context-menu-section">
+      <div class="context-section-label">Rotation 🔄</div>
+      <div class="context-rotate-row">
+        <button type="button" class="btn-context-chip" id="btnRotateLeft15" title="Rotate Counter-Clockwise 15°">↺ -15°</button>
+        <button type="button" class="btn-context-chip" id="btnRotateReset" title="Reset Rotation to 0°">0° Reset</button>
+        <button type="button" class="btn-context-chip" id="btnRotateRight15" title="Rotate Clockwise 15°">↻ +15°</button>
+      </div>
+      <div class="context-slider-row" style="margin-top: 6px; display: flex; align-items: center; gap: 8px;">
+        <input type="range" id="elementRotationSlider" min="-180" max="180" value="0" style="flex: 1; accent-color: var(--primary, #ff4d6d);" title="Adjust Rotation Angle">
+        <span id="elementRotationValue" style="font-size: 11px; font-weight: 700; color: #ff6b8b; min-width: 34px; text-align: right;">0°</span>
+      </div>
+    </div>
+
+    <!-- 3. Sticky Note Text & Box Styling (Hidden for Non-Sticky elements) -->
+    <div id="stickyStylingGroup">
+      <div class="context-menu-section">
+        <div class="context-toggle-row">
+          <span class="context-label">Outline</span>
+          <div class="checkbox-wrapper-5">
+            <div class="check" style="--size: 19px;">
+              <input type="checkbox" id="stickyToggleOutline">
+              <label for="stickyToggleOutline"></label>
+            </div>
+          </div>
+        </div>
+        <div id="stickyOutlineColorRow" class="context-sub-row" style="display: none;">
+          <span style="font-size: 11px; color: var(--text-muted);">Color:</span>
+          <input type="color" id="stickyOutlineColor" value="#ff4d6d" class="color-swatch-picker" title="Outline Color">
+        </div>
+      </div>
+      <div class="context-menu-section">
+        <div class="context-toggle-row">
+          <span class="context-label">Border / Box</span>
+          <div class="checkbox-wrapper-5">
+            <div class="check" style="--size: 19px;">
+              <input type="checkbox" id="stickyToggleBorder">
+              <label for="stickyToggleBorder"></label>
+            </div>
+          </div>
+        </div>
+        <div id="stickyBorderColorsRow" class="context-sub-row" style="display: none;">
+          <div class="mini-color-row">
+            <span class="sticky-palette-dot" data-bg="#fff9c4" data-border="#fff176" style="background:#fff9c4;" title="Sunny Yellow"></span>
+            <span class="sticky-palette-dot" data-bg="#f8bbd0" data-border="#f48fb1" style="background:#f8bbd0;" title="Blush Pink"></span>
+            <span class="sticky-palette-dot" data-bg="#e1bee7" data-border="#ce93d8" style="background:#e1bee7;" title="Lavender"></span>
+            <span class="sticky-palette-dot" data-bg="#b3e5fc" data-border="#81d4fa" style="background:#b3e5fc;" title="Sky Blue"></span>
+            <span class="sticky-palette-dot" data-bg="#dcedc8" data-border="#c5e1a5" style="background:#dcedc8;" title="Mint Green"></span>
+            <span class="sticky-palette-dot" data-bg="#ffe0b2" data-border="#ffcc80" style="background:#ffe0b2;" title="Peach"></span>
+          </div>
+        </div>
+      </div>
+      <div class="context-menu-section">
+        <div class="context-toggle-row">
+          <span class="context-label">Font Style 🔤</span>
+          <button type="button" id="btnToggleFontList" class="btn-font-preview">Caveat ▾</button>
+        </div>
+        <div id="stickyFontList" class="font-options-panel" style="display: none;">
+          <div class="font-option-item" data-font="'Caveat', cursive" style="font-family: 'Caveat', cursive; font-size: 16px;">Caveat Cursive</div>
+          <div class="font-option-item" data-font="'Dancing Script', cursive" style="font-family: 'Dancing Script', cursive; font-size: 15px;">Dancing Script</div>
+          <div class="font-option-item" data-font="'Great Vibes', cursive" style="font-family: 'Great Vibes', cursive; font-size: 16px;">Great Vibes Calligraphy</div>
+          <div class="font-option-item" data-font="'Sacramento', cursive" style="font-family: 'Sacramento', cursive; font-size: 16px;">Sacramento Delicate</div>
+          <div class="font-option-item" data-font="'Parisienne', cursive" style="font-family: 'Parisienne', cursive; font-size: 15px;">Parisienne Romance</div>
+          <div class="font-option-item" data-font="'Allura', cursive" style="font-family: 'Allura', cursive; font-size: 16px;">Allura Flowing</div>
+          <div class="font-option-item" data-font="'Alex Brush', cursive" style="font-family: 'Alex Brush', cursive; font-size: 16px;">Alex Brush Script</div>
+          <div class="font-option-item" data-font="'Marck Script', cursive" style="font-family: 'Marck Script', cursive; font-size: 15px;">Marck Script Quill</div>
+          <div class="font-option-item" data-font="'Pacifico', cursive" style="font-family: 'Pacifico', cursive; font-size: 14px;">Pacifico Wave</div>
+          <div class="font-option-item" data-font="'Playfair Display', serif" style="font-family: 'Playfair Display', serif; font-size: 14px;">Playfair Elegance</div>
+          <div class="font-option-item" data-font="'Shadows Into Light', cursive" style="font-family: 'Shadows Into Light', cursive; font-size: 14px;">Shadows Into Light</div>
+          <div class="font-option-item" data-font="'Indie Flower', cursive" style="font-family: 'Indie Flower', cursive; font-size: 14px;">Indie Flower Handwriting</div>
+          <div class="font-option-item" data-font="'Cinzel', serif" style="font-family: 'Cinzel', serif; font-size: 13px;">Cinzel Majestic</div>
+          <div class="font-option-item" data-font="'Abril Fatface', cursive" style="font-family: 'Abril Fatface', cursive; font-size: 14px;">Abril Fatface Bold</div>
+          <div class="font-option-item" data-font="'Lobster', cursive" style="font-family: 'Lobster', cursive; font-size: 14px;">Lobster Retro</div>
+          <div class="font-option-item" data-font="'Comfortaa', cursive" style="font-family: 'Comfortaa', cursive; font-size: 13px;">Comfortaa Modern Soft</div>
+          <div class="font-option-item" data-font="'Poiret One', cursive" style="font-family: 'Poiret One', cursive; font-size: 14px;">Poiret One Geometric</div>
+          <div class="font-option-item" data-font="'Righteous', cursive" style="font-family: 'Righteous', cursive; font-size: 13px;">Righteous Stylized</div>
+          <div class="font-option-item" data-font="'Courier Prime', monospace" style="font-family: 'Courier Prime', monospace; font-size: 13px;">Courier Prime Vintage</div>
+          <div class="font-option-item" data-font="'Comic Sans MS', cursive, sans-serif" style="font-family: 'Comic Sans MS', cursive, sans-serif; font-size: 13px;">Comic Cute Casual</div>
+        </div>
+      </div>
+      <div class="context-menu-section">
+        <div class="context-toggle-row">
+          <span class="context-label">Text Color 🎨</span>
+          <input type="color" id="stickyTextColor" value="#2b2326" class="color-swatch-picker" title="Text Color">
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Delete Action -->
+    <div class="context-menu-section context-delete-row">
+      <button type="button" id="btnDeleteSticky" class="btn-context-delete">🗑️ Delete Element</button>
+    </div>
+  </div>
+
+  <!-- Gallery Card Context Menu (Right-Click) -->
+  <div id="galleryContextMenu" class="floating-context-menu" style="display: none;">
+    <div class="context-menu-header">
+      <span>🏷️ Memory Genre &amp; Tags</span>
+    </div>
+    <div class="context-menu-body">
+      <div class="genre-input-wrapper">
+        <input type="text" id="genreInputField" placeholder="e.g. Date Night, Anniversary..." class="genre-text-input">
+        <button type="button" id="btnSaveGenre" class="btn-save-genre">Save</button>
+      </div>
+      <div class="genre-suggestions-label">Suggestions:</div>
+      <div class="genre-suggestions-container" id="genreSuggestions">
+        <span class="genre-chip" data-genre="Date Night">🍷 Date Night</span>
+        <span class="genre-chip" data-genre="Anniversary">💍 Anniversary</span>
+        <span class="genre-chip" data-genre="Travel &amp; Trips">✈️ Travel</span>
+        <span class="genre-chip" data-genre="Candlelight Dinner">🕯️ Candlelight</span>
+        <span class="genre-chip" data-genre="Beach Day">🏖️ Beach Day</span>
+        <span class="genre-chip" data-genre="First Kiss">💋 First Kiss</span>
+        <span class="genre-chip" data-genre="Cozy Home">🏡 Cozy Home</span>
+        <span class="genre-chip" data-genre="Adventures">🌲 Adventure</span>
+        <span class="genre-chip" data-genre="Cute Moments">🧸 Cute Moments</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DELETE CHAT MESSAGE (WhatsApp Style) -->
+  <div id="chatDeleteModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card" style="max-width: 380px; text-align: center;">
+      <div style="font-size: 38px; margin-bottom: 10px;">🗑️</div>
+      <h3 style="font-size: 19px; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">Delete Whisper?</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 22px;">Are you sure you want to remove this message?</p>
+      
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button type="button" id="btnDeleteForEveryone" class="btn-primary" style="background: #e74c3c; border-color: #e74c3c;">Delete for Everyone</button>
+        <button type="button" id="btnDeleteForMe" class="btn-secondary" style="border-color: #ffd1d8;">Delete for Me</button>
+        <button type="button" id="btnCancelDeleteModal" class="btn-secondary" style="border: none; color: var(--text-muted);">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVED SCRAPBOOKS MODAL -->
+  <div id="savedScrapbooksModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card saved-books-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 style="margin: 0; font-size: 19px; color: var(--primary);">📚 Our Saved Scrapbooks</h3>
+          <p style="margin: 4px 0 0; font-size: 12px; color: var(--text-muted);">Switch between your scrapbooks, rename or create a fresh one ❤️</p>
+        </div>
+        <button type="button" id="btnCloseSavedBooksModal" class="modal-close">&times;</button>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-bottom: 14px;">
+        <button type="button" class="btn-action-pill" id="btnModalCreateNewBook" style="background: var(--primary); color: white; border: none; padding: 7px 14px; font-size: 13px;">
+          ➕ Create New Scrapbook
+        </button>
+      </div>
+
+      <div id="savedScrapbooksList" class="saved-books-list">
+        <!-- Dynamically rendered list of scrapbooks -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SHARED CHAT WALLPAPER -->
+  <div id="chatWallpaperModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card wallpaper-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 style="margin: 0; font-size: 19px; color: var(--primary);">🎨 Shared Chat Wallpaper</h3>
+          <p style="margin: 4px 0 0; font-size: 12px; color: var(--text-muted);">Personalize your chat background. Updates in real-time for both of you! ❤️</p>
+        </div>
+        <button type="button" id="btnCloseWallpaperModal" class="modal-close">&times;</button>
+      </div>
+
+      <!-- Presets Grid -->
+      <div class="wallpaper-section-title">Romantic Gradient Presets</div>
+      <div class="wallpaper-presets-grid" id="wallpaperPresetsGrid">
+        <button type="button" class="wallpaper-preset-card active" data-type="none" data-value="" title="Clean Default">
+          <div class="wallpaper-swatch swatch-none"></div>
+          <span>Default Clean</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="linear-gradient(135deg, #fff0f3 0%, #ffe3e8 100%)" title="Blush Rose">
+          <div class="wallpaper-swatch" style="background: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 100%);"></div>
+          <span>Blush Rose</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)" title="Sunset Glow">
+          <div class="wallpaper-swatch" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);"></div>
+          <span>Sunset Glow</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)" title="Dreamy Lavender">
+          <div class="wallpaper-swatch" style="background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);"></div>
+          <span>Dreamy Lavender</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)" title="Pastel Twilight">
+          <div class="wallpaper-swatch" style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);"></div>
+          <span>Pastel Twilight</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="linear-gradient(135deg, #2b1055 0%, #7597de 100%)" title="Starlight Night">
+          <div class="wallpaper-swatch" style="background: linear-gradient(135deg, #2b1055 0%, #7597de 100%);"></div>
+          <span>Starlight Night</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="radial-gradient(circle, #ffccd5 10%, transparent 11%), radial-gradient(circle at bottom left, #ffe5ec 5%, transparent 6%), #fff" title="Subtle Hearts Pattern">
+          <div class="wallpaper-swatch" style="background: radial-gradient(circle, #ffccd5 10%, transparent 11%), #fff; background-size: 20px 20px;"></div>
+          <span>Polka Dots</span>
+        </button>
+        <button type="button" class="wallpaper-preset-card" data-type="preset" data-value="linear-gradient(135deg, #fdcbf1 0%, #e6dee9 100%)" title="Sweet Cotton">
+          <div class="wallpaper-swatch" style="background: linear-gradient(135deg, #fdcbf1 0%, #e6dee9 100%);"></div>
+          <span>Sweet Cotton</span>
+        </button>
+      </div>
+
+      <!-- Custom Photo Upload -->
+      <div class="wallpaper-section-title" style="margin-top: 18px;">Or Upload Our Photo</div>
+      <div class="wallpaper-upload-box" id="wallpaperUploadDropZone">
+        <input type="file" id="wallpaperFileInput" accept="image/*" style="display: none;">
+        <div class="wallpaper-upload-content" id="wallpaperUploadPrompt">
+          <span style="font-size: 28px;">📷</span>
+          <span style="font-weight: 600; font-size: 13px; color: var(--text-main);">Choose a photo of the two of you</span>
+          <span style="font-size: 11px; color: var(--text-muted);">PNG, JPG, WebP supported</span>
+          <button type="button" class="btn-action-pill" id="btnBrowseWallpaperFile" style="margin-top: 8px;">Browse Photo</button>
+        </div>
+        <div class="wallpaper-custom-preview-wrap" id="wallpaperCustomPreviewWrap" style="display: none;">
+          <img id="wallpaperCustomPreviewImg" src="" alt="Custom Wallpaper Preview">
+          <button type="button" class="btn-preview-remove" id="btnRemoveCustomWallpaper" title="Remove">&times;</button>
+        </div>
+      </div>
+
+      <!-- Opacity / Intensity Slider -->
+      <div class="wallpaper-opacity-control">
+        <div class="wallpaper-opacity-header">
+          <span style="font-size: 13px; font-weight: 600; color: var(--text-main);">Wallpaper Intensity</span>
+          <span id="wallpaperOpacityVal" style="font-size: 13px; font-weight: 700; color: var(--primary);">40%</span>
+        </div>
+        <input type="range" id="wallpaperOpacitySlider" min="10" max="100" value="40" class="wallpaper-slider">
+        <span style="font-size: 11px; color: var(--text-muted);">Adjust so text and messages stay easily readable ❤️</span>
+      </div>
+
+      <!-- Footer Buttons -->
+      <div class="modal-footer" style="margin-top: 22px; display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" class="btn-secondary" id="btnCancelWallpaper">Cancel</button>
+        <button type="button" class="btn-primary" id="btnSaveWallpaper" style="width: auto; padding: 10px 22px;">Apply for Both of Us ❤️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DEDICATED MAGIC WORDS & LOVE TRIGGERS -->
+  <div id="chatMagicWordsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card magic-words-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 style="margin: 0; font-size: 19px; color: var(--primary);">✨ Love Triggers &amp; Magic Words</h3>
+          <p style="margin: 4px 0 0; font-size: 12px; color: var(--text-muted);">
+            When either of you sends these special sentences, your chat gently bursts into romantic effects in real-time! ❤️
+          </p>
+        </div>
+        <button type="button" id="btnCloseMagicWordsModal" class="modal-close">&times;</button>
+      </div>
+
+      <!-- Add New Magic Sentence Form -->
+      <div class="magic-words-add-box">
+        <div class="magic-words-add-title">➕ Add Our Special Sentence or Nickname</div>
+        <form id="formAddMagicWord" class="magic-word-form">
+          <div class="magic-word-input-wrap">
+            <input 
+              type="text" 
+              id="inputMagicPhrase" 
+              class="magic-word-input" 
+              placeholder="e.g. I love you, Miss you, My Queen, Goodnight my soul..." 
+              maxlength="80"
+              autocomplete="off"
+              required
+            >
+          </div>
+
+          <div class="magic-effect-selector-label">Choose Magical Romantic Effect:</div>
+          <div class="magic-effect-options" id="magicEffectOptions">
+            <label class="magic-effect-pill active">
+              <input type="radio" name="magicEffect" value="hearts" checked>
+              <span class="effect-icon">💖</span>
+              <span class="effect-name">Neon Hearts</span>
+            </label>
+            <label class="magic-effect-pill">
+              <input type="radio" name="magicEffect" value="petals">
+              <span class="effect-icon">🌹</span>
+              <span class="effect-name">Rose Petals</span>
+            </label>
+            <label class="magic-effect-pill">
+              <input type="radio" name="magicEffect" value="stars">
+              <span class="effect-icon">✨</span>
+              <span class="effect-name">Constellations</span>
+            </label>
+            <label class="magic-effect-pill">
+              <input type="radio" name="magicEffect" value="fireworks">
+              <span class="effect-icon">🎆</span>
+              <span class="effect-name">Love Fireworks</span>
+            </label>
+          </div>
+
+          <div class="magic-word-form-actions">
+            <button type="button" class="btn-action-pill" id="btnPreviewMagicEffect" title="Test this effect now">
+              🪄 Preview Effect
+            </button>
+            <button type="submit" class="btn-primary" id="btnAddMagicWordSubmit" style="width: auto; padding: 9px 20px;">
+              ✨ Add to Our Chat
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Active Sentences List -->
+      <div class="magic-words-list-title">Active Magic Words for Both of Us</div>
+      <div class="magic-words-list" id="magicWordsList">
+        <!-- Dynamically rendered magic words -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Avatar Framing & View Area Editor Modal -->
+  <div id="avatarCropModal" class="avatar-crop-modal" style="display: none;">
+    <div class="avatar-crop-card">
+      <div class="avatar-crop-header">
+        <div class="avatar-crop-title">
+          <span class="crop-header-icon">📷</span>
+          <div>
+            <h3>Frame Profile Picture</h3>
+            <p>Drag to reposition · Slider to zoom in & out</p>
+          </div>
+        </div>
+        <button type="button" class="modal-close" id="btnCloseAvatarCrop">&times;</button>
+      </div>
+
+      <div class="avatar-crop-body">
+        <!-- Interactive Crop Stage -->
+        <div class="avatar-crop-stage-container">
+          <div class="avatar-crop-stage" id="avatarCropStage">
+            <img id="avatarCropImg" src="" alt="Avatar preview" draggable="false">
+            <div class="avatar-crop-overlay-guide">
+              <div class="avatar-crop-circle-frame"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls: Zoom slider & Pick New -->
+        <div class="avatar-crop-controls">
+          <div class="crop-zoom-row">
+            <span class="zoom-label">🔍 Zoom</span>
+            <input type="range" id="avatarZoomSlider" min="100" max="400" step="5" value="120" class="crop-slider">
+            <span class="zoom-value" id="avatarZoomVal">120%</span>
+            <button type="button" class="btn-crop-reset" id="btnResetAvatarCrop" title="Center photo">↺ Center</button>
+          </div>
+          <div class="crop-quick-zooms">
+            <button type="button" class="btn-quick-zoom" data-zoom="100">1x Fit</button>
+            <button type="button" class="btn-quick-zoom" data-zoom="140">1.4x Close</button>
+            <button type="button" class="btn-quick-zoom" data-zoom="180">1.8x Face</button>
+            <button type="button" class="btn-quick-zoom" data-zoom="240">2.4x Portrait</button>
+          </div>
+          <div class="crop-hints">
+            <span>✨ Drag photo freely to position your face in the center</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="avatar-crop-footer">
+        <button type="button" class="btn-secondary" id="btnChangeAvatarPhoto">Choose Other Photo</button>
+        <button type="button" class="btn-primary" id="btnSaveAvatarCrop">Save Profile Photo ❤️</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEARTBEAT SCREEN BURST OVERLAY -->
+  <div id="heartbeatOverlay" class="heartbeat-burst" style="display: none;">💖</div>
+
+  <!-- FLOATING REPLYABLE MESSAGE PREVIEW (BOTTOM LEFT) -->
+  <div id="floatingChatPreview" class="floating-chat-preview" style="display: none;">
+    <!-- 1. Circular Entity (Default state: pulsating romantic avatar bubble) -->
+    <div id="floatingChatBubble" class="floating-chat-bubble" title="Whisper from your partner! Hover or click to reply">
+      <div class="floating-bubble-pulse"></div>
+      <div class="floating-bubble-avatar">
+        <img id="floatingBubbleAvatarImg" src="" alt="Partner" style="display: none;">
+        <span id="floatingBubbleAvatarFallback">👧</span>
+      </div>
+      <span class="floating-bubble-badge" title="New Whisper">💌</span>
+    </div>
+
+    <!-- 2. Expandable Replyable Entity Card (Smoothly expands on hover / click) -->
+    <div id="floatingChatCard" class="floating-chat-card">
+      <!-- Card Header -->
+      <div class="floating-card-header">
+        <div class="floating-card-sender-info">
+          <div class="floating-card-avatar">
+            <img id="floatingCardAvatarImg" src="" alt="Partner" style="display: none;">
+            <span id="floatingCardAvatarFallback">👧</span>
+          </div>
+          <div class="floating-card-sender-meta">
+            <h4 id="floatingCardSenderName" class="floating-sender-name">Your Partner</h4>
+            <span class="floating-sender-subtitle">Whispered just now ❤️</span>
+          </div>
+        </div>
+        <div class="floating-card-actions">
+          <button type="button" id="btnFloatingOpenFullChat" class="btn-floating-icon" title="Open full chat tab">
+            💬
+          </button>
+          <button type="button" id="btnFloatingCardClose" class="btn-floating-icon" title="Dismiss">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Card Body: Message Snippet -->
+      <div class="floating-card-body">
+        <p id="floatingCardMessageText" class="floating-message-text">...</p>
+      </div>
+
+      <!-- Quick Reaction Emojis -->
+      <div class="floating-quick-emojis">
+        <button type="button" class="quick-emoji-btn" data-emoji="❤️" title="Send ❤️">❤️</button>
+        <button type="button" class="quick-emoji-btn" data-emoji="🥰" title="Send 🥰">🥰</button>
+        <button type="button" class="quick-emoji-btn" data-emoji="💋" title="Send 💋">💋</button>
+        <button type="button" class="quick-emoji-btn" data-emoji="✨" title="Send ✨">✨</button>
+        <button type="button" class="quick-emoji-btn" data-emoji="🥺" title="Send 🥺">🥺</button>
+      </div>
+
+      <!-- Inline Reply Form -->
+      <form id="floatingCardReplyForm" class="floating-card-reply-form">
+        <div class="floating-card-input-wrapper">
+          <input type="text" id="floatingCardReplyInput" class="floating-card-input" placeholder="Whisper back..." maxlength="300" autocomplete="off">
+          <button type="submit" id="btnFloatingCardSend" class="btn-floating-send" title="Send reply">
+            <span>💌</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: SCHEDULE / EDIT POPUP FOR PARTNER (PERSONAL SPACE) -->
+  <div class="modal-overlay" id="personalPopupModal" style="display: none;">
+    <div class="modal-card popup-schedule-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="personalPopupModalTitle" style="margin: 0; font-size: 20px; font-weight: 800; color: var(--primary);">💌 Schedule a Surprise Popup</h3>
+          <p style="margin: 4px 0 0; font-size: 12.5px; color: var(--text-muted);">Surprise your partner with a celebratory popup when they open Heartly on their special day.</p>
+        </div>
+        <button type="button" id="btnClosePopupModal" class="modal-close">&times;</button>
+      </div>
+
+      <form id="formScheduledPopup" class="personal-popup-form">
+        <input type="hidden" id="popupEditId" value="">
+        
+        <!-- Target Date -->
+        <div class="form-group">
+          <label class="form-label">Special Date for Popup *</label>
+          <input type="date" id="popupTargetDate" class="form-input" required>
+          <small style="font-size: 11.5px; color: var(--text-muted); margin-top: 3px; display: block;">When your partner opens Heartly on this day, the popup will be displayed.</small>
+        </div>
+
+        <!-- Popup Title -->
+        <div class="form-group">
+          <label class="form-label">Popup Title / Greeting *</label>
+          <input type="text" id="popupTitle" class="form-input" placeholder="e.g. Happy Birthday to My Queen! 🎂" required maxlength="80">
+        </div>
+
+        <!-- Heartfelt Message -->
+        <div class="form-group">
+          <label class="form-label">Surprise Message / Romantic Letter *</label>
+          <textarea id="popupMessage" class="form-input" rows="4" placeholder="Write your heartfelt message, birthday wish, or love letter here..." required></textarea>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="form-group">
+          <label class="form-label">Celebration Theme</label>
+          <div class="popup-theme-options" id="popupThemeOptions">
+            <label class="popup-theme-pill active">
+              <input type="radio" name="popupTheme" value="birthday" checked>
+              <span class="theme-icon">🎂</span>
+              <span class="theme-label">Birthday</span>
+            </label>
+            <label class="popup-theme-pill">
+              <input type="radio" name="popupTheme" value="anniversary">
+              <span class="theme-icon">💍</span>
+              <span class="theme-label">Anniversary</span>
+            </label>
+            <label class="popup-theme-pill">
+              <input type="radio" name="popupTheme" value="love">
+              <span class="theme-icon">💖</span>
+              <span class="theme-label">Romantic Love</span>
+            </label>
+            <label class="popup-theme-pill">
+              <input type="radio" name="popupTheme" value="celebration">
+              <span class="theme-icon">🎉</span>
+              <span class="theme-label">Celebration</span>
+            </label>
+            <label class="popup-theme-pill">
+              <input type="radio" name="popupTheme" value="custom">
+              <span class="theme-icon">✨</span>
+              <span class="theme-label">Custom Surprise</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Photo Attachment -->
+        <div class="form-group">
+          <label class="form-label">Add a Special Photo (Optional)</label>
+          <div class="popup-attach-row">
+            <input type="file" id="popupImageFileInput" accept="image/*" style="display: none;">
+            <button type="button" class="btn-attach-pill" id="btnPickPopupImage">
+              📷 Choose / Upload Photo
+            </button>
+            <span id="popupImageFileName" class="attach-filename-hint">No photo attached</span>
+          </div>
+          <div id="popupImagePreviewWrap" class="popup-preview-container" style="display: none;">
+            <div class="preview-thumb-wrap">
+              <img id="popupImagePreviewImg" src="" alt="Popup Photo Preview">
+              <button type="button" class="btn-remove-thumb" id="btnRemovePopupImage" title="Remove photo">&times;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voice Note Attachment -->
+        <div class="form-group">
+          <label class="form-label">Add a Voice Note (Optional)</label>
+          <div class="popup-attach-row">
+            <button type="button" class="btn-attach-pill voice-rec-btn" id="btnRecordPopupVoice">
+              🎙️ Record Voice Note
+            </button>
+            <button type="button" class="btn-attach-pill voice-rec-stop-btn" id="btnStopPopupVoice" style="display: none;">
+              ⏹️ Stop (<span id="voiceRecTimer">0:00</span>)
+            </button>
+            <input type="file" id="popupAudioFileInput" accept="audio/*" style="display: none;">
+            <button type="button" class="btn-attach-subtle" id="btnPickPopupAudio">
+              📁 Upload Audio
+            </button>
+            <span id="popupAudioFileName" class="attach-filename-hint">No voice note</span>
+          </div>
+          <div id="popupAudioPreviewWrap" class="popup-preview-container" style="display: none;">
+            <div class="preview-audio-wrap">
+              <audio id="popupAudioPreviewEl" controls style="max-width: 280px;"></audio>
+              <button type="button" class="btn-remove-thumb" id="btnRemovePopupAudio" title="Remove voice note">&times;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confetti Toggle -->
+        <div class="form-group" style="margin-top: 10px;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="checkbox-wrapper-5">
+              <div class="check" style="--size: 22px;">
+                <input type="checkbox" id="popupConfettiToggle" checked>
+                <label for="popupConfettiToggle"></label>
+              </div>
+            </div>
+            <label for="popupConfettiToggle" style="font-size: 13px; color: var(--text-main); font-weight: 600; cursor: pointer; user-select: none;">
+              🎉 Burst celebration confetti when partner opens
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+          <button type="button" class="btn-secondary" id="btnCancelPopupModal">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSavePopupSubmit">Save &amp; Schedule Surprise 💌</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: FLOATING MEMORY CLASSES & CATEGORIES AREA (PERSONAL SPACE) -->
+  <div class="modal-overlay" id="personalMomentsClassesModal" style="display: none;">
+    <div class="modal-card moments-classes-modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <div>
+          <h3 style="margin: 0; font-size: 20px; font-weight: 800; color: var(--primary);">🏷️ Memory Classes &amp; Categories</h3>
+          <p style="margin: 4px 0 0; font-size: 12.5px; color: var(--text-muted);">Organize your unforgettable moments into custom classes. Click any class to view its memories!</p>
+        </div>
+        <button type="button" id="btnCloseMomentsClassesModal" class="modal-close">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding: 16px 20px;">
+        <!-- Create Class Form -->
+        <div class="create-class-panel">
+          <h4 style="margin: 0 0 10px 0; font-size: 13.5px; font-weight: 700; color: var(--primary);">✨ Create a New Memory Class</h4>
+          <div class="create-class-row">
+            <select id="inputNewClassEmoji" class="form-input create-class-emoji-select" title="Choose emoji">
+              <option value="💖">💖</option>
+              <option value="✈️">✈️</option>
+              <option value="🌙">🌙</option>
+              <option value="☕">☕</option>
+              <option value="🏖️">🏖️</option>
+              <option value="💍">💍</option>
+              <option value="🌸">🌸</option>
+              <option value="🎂">🎂</option>
+              <option value="✨">✨</option>
+              <option value="🌧️">🌧️</option>
+              <option value="🚗">🚗</option>
+              <option value="🎶">🎶</option>
+            </select>
+            <input type="text" id="inputNewClassName" class="form-input create-class-name-input" placeholder="Class name (e.g. Firsts, Roadtrips)..." maxlength="35" autocomplete="off" spellcheck="false">
+            <button type="button" class="btn-primary create-class-submit-btn" id="btnCreateNewClassSubmit">
+              + Create
+            </button>
+          </div>
+        </div>
+
+        <!-- Existing Classes List -->
+        <div class="existing-classes-wrap">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h4 style="margin: 0; font-size: 13.5px; font-weight: 700; color: var(--text-main);">Your Memory Classes</h4>
+            <span id="momentsClassesCount" style="font-size: 11.5px; color: var(--text-muted);">0 classes</span>
+          </div>
+          <div class="classes-shelf-list" id="momentsClassesShelfList" style="display: flex; flex-direction: column; gap: 8px; max-height: 260px; overflow-y: auto; padding-right: 4px;">
+            <!-- Dynamically populated classes -->
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;">
+        <button type="button" class="btn-secondary" id="btnShowAllMomentsFromClasses" style="font-size: 12px;">🌟 View All Moments</button>
+        <button type="button" class="btn-primary" id="btnDoneMomentsClassesModal">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT UNFORGETTABLE MOMENT (PERSONAL SPACE) -->
+  <div class="modal-overlay" id="personalMomentModal" style="display: none;">
+    <div class="modal-card moment-modal-card" style="max-width: 540px;">
+      <div class="modal-header">
+        <div>
+          <h3 id="personalMomentModalTitle" style="margin: 0; font-size: 20px; font-weight: 800; color: var(--primary);">✨ Add Unforgettable Moment</h3>
+          <p style="margin: 4px 0 0; font-size: 12.5px; color: var(--text-muted);">Preserve a milestone, a breakthrough, or an emotion that had stricken your heart forever.</p>
+        </div>
+        <button type="button" id="btnCloseMomentModal" class="modal-close">&times;</button>
+      </div>
+
+      <form id="formPersonalMoment" class="modal-body" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="momentEditId" value="">
+
+        <!-- Title -->
+        <div class="form-group">
+          <label class="form-label">Moment Title *</label>
+          <input type="text" id="momentTitle" class="form-input" placeholder="e.g. When We Walked by the Ocean in the Rain..." required maxlength="90">
+        </div>
+
+        <!-- Date & Location Row -->
+        <div style="display: flex; gap: 12px; align-items: flex-start;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label">Date of Memory</label>
+            <input type="date" id="momentDate" class="form-input">
+          </div>
+          <div class="form-group" style="flex: 1.3;">
+            <label class="form-label">Location (Optional)</label>
+            <div style="position: relative;">
+              <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 13px;">📍</span>
+              <input type="text" id="momentLocation" class="form-input" placeholder="e.g. Marine Drive, Mumbai" style="padding-left: 32px;" maxlength="70">
+            </div>
+          </div>
+        </div>
+
+        <!-- Memory Class / Category -->
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+            <label class="form-label" style="margin: 0;">Memory Class / Category</label>
+            <button type="button" id="btnCreateClassFromMomentModal" style="background: none; border: none; color: var(--primary); font-size: 11.5px; font-weight: 700; cursor: pointer;">+ New Class</button>
+          </div>
+          <select id="momentClassSelect" class="form-input">
+            <option value="">(No specific class / General memory)</option>
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <!-- Story / Description -->
+        <div class="form-group">
+          <label class="form-label">Story &amp; Feelings *</label>
+          <textarea id="momentDescription" class="form-input" rows="4" placeholder="Describe the scene, the words that were spoken, and how you felt... Pour your memory into words that will last forever." required></textarea>
+        </div>
+
+        <!-- Photo Attachment -->
+        <div class="form-group">
+          <label class="form-label">Photo Attachment (Optional)</label>
+          <div class="popup-attach-row">
+            <input type="file" id="momentImageFileInput" accept="image/*" style="display: none;">
+            <button type="button" class="btn-attach-pill" id="btnPickMomentImage">
+              📷 Choose / Upload Photo
+            </button>
+            <span id="momentImageFileName" class="attach-filename-hint">No photo attached</span>
+          </div>
+          <div id="momentImagePreviewWrap" class="popup-preview-container" style="display: none; margin-top: 8px;">
+            <div class="preview-thumb-wrap">
+              <img id="momentImagePreviewImg" src="" alt="Moment Photo Preview">
+              <button type="button" class="btn-remove-thumb" id="btnRemoveMomentImage" title="Remove photo">&times;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Voice Clip Attachment -->
+        <div class="form-group">
+          <label class="form-label">Voice Clip / Audio Note (Optional)</label>
+          <div class="popup-attach-row" style="flex-wrap: wrap; gap: 8px;">
+            <input type="file" id="momentAudioFileInput" accept="audio/*" style="display: none;">
+            <button type="button" class="btn-attach-pill" id="btnPickMomentAudio">
+              🎵 Upload Audio File
+            </button>
+            <button type="button" class="btn-attach-pill btn-record-voice" id="btnRecordMomentVoice">
+              🎙️ Record Voice Note
+            </button>
+            <button type="button" class="btn-attach-pill btn-recording-pulse" id="btnStopMomentVoice" style="display: none;">
+              ⏹️ Stop (<span id="momentVoiceRecTimer">0:00</span>)
+            </button>
+            <span id="momentAudioFileName" class="attach-filename-hint">No voice note</span>
+          </div>
+          <div id="momentAudioPreviewWrap" class="popup-preview-container" style="display: none; margin-top: 8px;">
+            <audio id="momentAudioPreviewEl" controls style="width: 100%; height: 36px;"></audio>
+            <button type="button" class="btn-remove-thumb" id="btnRemoveMomentAudio" title="Remove voice note" style="margin-left: 8px;">&times;</button>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+          <button type="button" class="btn-secondary" id="btnCancelMomentModal">Cancel</button>
+          <button type="submit" class="btn-primary" id="btnSaveMomentSubmit">Save Moment ✨</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ENLARGED MEMORY VIEWER (IMMERSIVE READER WITH TYPEWRITER ANIMATION & RIGHT-ALIGNED MEDIA) -->
+  <div class="modal-overlay memory-enlarge-overlay" id="personalMemoryEnlargeModal" style="display: none;">
+    <div class="memory-enlarge-card" id="memoryEnlargeCard">
+      <button type="button" class="memory-enlarge-close" id="btnCloseMemoryEnlarge" title="Close (Esc)">&times;</button>
+      <div class="memory-enlarge-content" id="memoryEnlargeContent">
+        <!-- Dynamically populated based on image, voice, or text-only memory -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CELEBRATORY SURPRISE POPUP MODAL (RECEIVING PARTNER OPENS HEARTLY TODAY) -->
+  <div class="celebration-popup-overlay" id="scheduledSurpriseModal" style="display: none;">
+    <!-- Celebration Confetti Canvas -->
+    <canvas id="surpriseConfettiCanvas" class="surprise-confetti-canvas"></canvas>
+
+    <div class="celebration-modal-dialog">
+      <div class="celebration-card-wrapper">
+        <!-- Floating Romantic Ribbon Header -->
+        <div class="celebration-ribbon-banner">
+          <span id="surpriseThemeIcon" class="celebration-ribbon-icon">🎂</span>
+          <span id="surpriseRibbonTitle" class="celebration-ribbon-text">SPECIAL CELEBRATION FOR TODAY!</span>
+          <span class="celebration-ribbon-sparkle">✨</span>
+        </div>
+
+        <div class="celebration-card-inner">
+          <h2 id="surpriseDisplayTitle" class="celebration-main-title">Happy Birthday My Love!</h2>
+          <div class="celebration-sender-line">
+            <span>A special surprise from your love, </span>
+            <strong id="surpriseDisplaySender" class="celebration-sender-name">Partner</strong>
+            <span> ♡</span>
+          </div>
+
+          <!-- Photo if provided -->
+          <div id="surpriseDisplayImageWrap" class="celebration-photo-frame" style="display: none;">
+            <img id="surpriseDisplayImage" src="" alt="Surprise celebration photo">
+          </div>
+
+          <!-- Letter / Message -->
+          <div class="celebration-letter-box">
+            <p id="surpriseDisplayMessage" class="celebration-letter-text"></p>
+          </div>
+
+          <!-- Voice Note if provided -->
+          <div id="surpriseDisplayAudioWrap" class="celebration-voice-box" style="display: none;">
+            <div class="celebration-voice-label">
+              <span>🎙️ Listen to a special voice note:</span>
+            </div>
+            <audio id="surpriseDisplayAudio" controls preload="metadata"></audio>
+          </div>
+
+          <!-- Footer Options -->
+          <div class="celebration-footer-actions">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div class="checkbox-wrapper-5">
+                <div class="check" style="--size: 20px;">
+                  <input type="checkbox" id="checkDoNotShowAgainToday">
+                  <label for="checkDoNotShowAgainToday"></label>
+                </div>
+              </div>
+              <label for="checkDoNotShowAgainToday" style="font-size: 12.5px; color: rgba(255,255,255,0.85); cursor: pointer; user-select: none;">
+                Do not show this popup again today
+              </label>
+            </div>
+            <button type="button" class="btn-celebration-open" id="btnCloseSurpriseModal">
+              Open Our Sanctuary ❤️
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/dialog.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/aiAssistant.js"></script>
+  <script src="js/socket.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/scratchbook.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/floatingPreview.js"></script>
+  <script src="js/dates.js"></script>
+  <script src="js/dreams.js"></script>
+  <script src="js/personalSpace.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

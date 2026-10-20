@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heartly — Connecting...</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #120816 radial-gradient(circle at 50% 45%, #2a0f2b 0%, #120816 75%, #08030b 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-app-region: drag;
+    }
+
+    .splash-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 2;
+      max-width: 480px;
+      padding: 30px;
+    }
+
+    /* Ambient Glow Behind Animation */
+    .ambient-glow {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(252, 0, 101, 0.35) 0%, rgba(252, 0, 101, 0) 70%);
+      filter: blur(20px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Animation Wrapper */
+    .cssload-wrapper {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+    }
+
+    /* From Uiverse.io by SouravBandyopadhyay */ 
+    .cssload-main {
+      position: absolute;
+      content: '';
+      left: 50%;
+      top: 42%;
+      transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+    }
+
+    .cssload-main * {
+      font-size: 56px;
+    }
+
+    .cssload-heart {
+      animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -o-animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -ms-animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -webkit-animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -moz-animation: cssload-heart 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      top: 50%;
+      content: '';
+      left: 50%;
+      position: absolute;
+    }
+
+    .cssload-heartL {
+      width: 1em;
+      height: 1em;
+      border: 1px solid rgb(252, 0, 101);
+      background-color: rgb(252, 0, 101);
+      content: '';
+      position: absolute;
+      display: block;
+      border-radius: 100%;
+      animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -o-animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -ms-animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -webkit-animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -moz-animation: cssload-heartL 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      transform: translate(-28px, -27px);
+      -o-transform: translate(-28px, -27px);
+      -ms-transform: translate(-28px, -27px);
+      -webkit-transform: translate(-28px, -27px);
+      -moz-transform: translate(-28px, -27px);
+    }
+
+    .cssload-heartR {
+      width: 1em;
+      height: 1em;
+      border: 1px solid rgb(252, 0, 101);
+      background-color: rgb(252, 0, 101);
+      content: '';
+      position: absolute;
+      display: block;
+      border-radius: 100%;
+      transform: translate(28px, -27px);
+      -o-transform: translate(28px, -27px);
+      -ms-transform: translate(28px, -27px);
+      -webkit-transform: translate(28px, -27px);
+      -moz-transform: translate(28px, -27px);
+      animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -o-animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -ms-animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -webkit-animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -moz-animation: cssload-heartR 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-square {
+      width: 1em;
+      height: 1em;
+      border: 1px solid rgb(252, 0, 101);
+      background-color: rgb(252, 0, 101);
+      position: relative;
+      display: block;
+      content: '';
+      transform: scale(1) rotate(-45deg);
+      -o-transform: scale(1) rotate(-45deg);
+      -ms-transform: scale(1) rotate(-45deg);
+      -webkit-transform: scale(1) rotate(-45deg);
+      -moz-transform: scale(1) rotate(-45deg);
+      animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -o-animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -ms-animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -webkit-animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -moz-animation: cssload-square 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    .cssload-shadow {
+      top: 97px;
+      left: 50%;
+      content: '';
+      position: relative;
+      display: block;
+      bottom: -.5em;
+      width: 1em;
+      height: .24em;
+      background-color: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(252, 0, 101, 0.35);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -o-animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -ms-animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -webkit-animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+      -moz-animation: cssload-shadow 2.88s cubic-bezier(0.75, 0, 0.5, 1) infinite normal;
+    }
+
+    @keyframes cssload-square {
+      50% {
+        border-radius: 100%;
+        transform: scale(0.5) rotate(-45deg);
+      }
+      100% {
+        transform: scale(1) rotate(-45deg);
+      }
+    }
+
+    @-webkit-keyframes cssload-square {
+      50% {
+        border-radius: 100%;
+        -webkit-transform: scale(0.5) rotate(-45deg);
+      }
+      100% {
+        -webkit-transform: scale(1) rotate(-45deg);
+      }
+    }
+
+    @keyframes cssload-heart {
+      50% {
+        transform: rotate(360deg);
+      }
+      100% {
+        transform: rotate(720deg);
+      }
+    }
+
+    @-webkit-keyframes cssload-heart {
+      50% {
+        -webkit-transform: rotate(360deg);
+      }
+      100% {
+        -webkit-transform: rotate(720deg);
+      }
+    }
+
+    @keyframes cssload-heartL {
+      60% {
+        transform: scale(0.4);
+      }
+    }
+
+    @-webkit-keyframes cssload-heartL {
+      60% {
+        -webkit-transform: scale(0.4);
+      }
+    }
+
+    @keyframes cssload-heartR {
+      40% {
+        transform: scale(0.4);
+      }
+    }
+
+    @-webkit-keyframes cssload-heartR {
+      40% {
+        -webkit-transform: scale(0.4);
+      }
+    }
+
+    @keyframes cssload-shadow {
+      50% {
+        transform: translateX(-50%) scale(0.5);
+        border-color: rgba(252, 0, 101, 0.15);
+      }
+    }
+
+    @-webkit-keyframes cssload-shadow {
+      50% {
+        -webkit-transform: translateX(-50%) scale(0.5);
+        border-color: rgba(252, 0, 101, 0.15);
+      }
+    }
+
+    /* Titles & Texts */
+    .splash-title {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 30%, #ff85a2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .splash-motto {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 14.5px;
+      color: rgba(255, 230, 235, 0.78);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .splash-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 100, 140, 0.28);
+      backdrop-filter: blur(12px);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #ffeef2;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fc0065;
+      box-shadow: 0 0 10px #fc0065;
+      animation: pulseDot 1.4s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% {
+        transform: scale(0.8);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 1;
+      }
+    }
+    .splash-version-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ff9ebb;
+      background: rgba(255, 77, 109, 0.12);
+      border: 1px solid rgba(255, 107, 129, 0.35);
+      backdrop-filter: blur(8px);
+      margin-bottom: 18px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow"></div>
+  <div class="splash-container">
+    <div class="splash-version-pill" id="splashAppVersion">v1.2.0</div>
+    <div class="cssload-wrapper">
+      <!-- From Uiverse.io by SouravBandyopadhyay --> 
+      <div class="cssload-main">
+        <div class="cssload-heart">
+          <span class="cssload-heartL"></span>
+          <span class="cssload-heartR"></span>
+          <span class="cssload-square"></span>
+        </div>
+        <div class="cssload-shadow"></div>
+      </div>
+    </div>
+    <h1 class="splash-title">Heartly</h1>
+    <p class="splash-motto">"Where two hearts beat in silence, and eternal love speaks in whispers."</p>
+    <div class="splash-status-pill">
+      <span class="pulse-dot"></span>
+      <span id="splashStatusText">Connecting to your sanctuary... ✨</span>
+    </div>
+  </div>
+  <script>
+    fetch('/version.json')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.version) {
+          const el = document.getElementById('splashAppVersion');
+          if (el) el.innerText = 'v' + data.version;
+        }
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "Heartly — Sanctuary for Two",
+  "short_name": "Heartly",
+  "description": "Private, real-time sanctuary exclusively for two lovers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff0f3",
+  "theme_color": "#ff4d6d",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/heartly.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
