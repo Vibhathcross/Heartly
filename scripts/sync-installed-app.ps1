@@ -40,5 +40,32 @@ Write-Host "[5/5] Syncing electron scripts and config..." -ForegroundColor Cyan
 Copy-Item (Join-Path $projectDir "electron\*") -Destination (Join-Path $resourcesAppDir "electron") -Recurse -Force
 Copy-Item (Join-Path $projectDir "package.json") -Destination (Join-Path $resourcesAppDir "package.json") -Force
 
+# 6. Sync electron-updater modules to installed app
+$updaterModules = @(
+    'electron-updater',
+    'builder-util-runtime',
+    'lazy-val',
+    'tiny-typed-emitter',
+    'js-yaml',
+    'lodash.escaperegexp',
+    'lodash.isequal',
+    'semver',
+    'fs-extra',
+    'graceful-fs',
+    'jsonfile',
+    'universalify',
+    'argparse'
+)
+$destModules = Join-Path $resourcesAppDir "node_modules"
+if (Test-Path $destModules) {
+    foreach ($mod in $updaterModules) {
+        $srcMod = Join-Path $projectDir "node_modules\$mod"
+        $dstMod = Join-Path $destModules $mod
+        if (Test-Path $srcMod) {
+            Copy-Item $srcMod -Destination $dstMod -Recurse -Force
+        }
+    }
+}
+
 Write-Host "`nSUCCESS: Desktop App has been updated to the latest version with Ema!" -ForegroundColor Green
 Write-Host "NOTE: If Heartly is currently open, quit it completely (right-click the Heartly tray icon or close window) and open it from the desktop shortcut to see Ema!" -ForegroundColor Yellow

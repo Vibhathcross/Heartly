@@ -4,7 +4,13 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const { spawn } = require('child_process');
-const { autoUpdater } = require('electron-updater');
+
+let autoUpdater = null;
+try {
+  autoUpdater = require('electron-updater').autoUpdater;
+} catch (e) {
+  console.log('[Heartly AutoUpdater] electron-updater module not present; auto-updates disabled for this mode.');
+}
 
 let mainWindow = null;
 let tray = null;
@@ -249,6 +255,10 @@ function createWindow() {
 
 // Automated update mechanism via GitHub Releases (https://github.com/Vibhathcross/Heartly)
 function initAutoUpdater() {
+  if (!autoUpdater) {
+    console.log('[Heartly AutoUpdater] electron-updater not available; skipping update checks.');
+    return;
+  }
   if (!app.isPackaged) {
     console.log('[Heartly AutoUpdater] Development mode detected; automatic update checking inactive.');
     return;
