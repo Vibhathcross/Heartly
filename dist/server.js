@@ -49,14 +49,14 @@ app.get('/api/health', (req, res) => {
     res.json({
         status: 'healthy',
         app: 'Heartly',
-        version: '1.2.1',
+        version: '1.2.2',
         storage: 'MongoDB + MongoDB GridFS',
         time: new Date().toISOString(),
     });
 });
 app.get('/api/version', (req, res) => {
     res.json({
-        version: '1.2.1',
+        version: '1.2.2',
         app: 'Heartly',
         name: 'Heartly Sanctuary',
     });
