@@ -382,4 +382,87 @@ router.post('/avatar', authenticateToken, upload.single('avatar'), async (req, r
         res.status(500).json({ error: 'Failed to upload profile picture' });
     }
 });
+// 8. Presence Heartbeat endpoint: updates user activity in MongoDB and returns live partner presence
+router.post('/heartbeat', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const now = new Date();
+        const user = await User.findByIdAndUpdate(userId, { lastActive: now, isOnline: true }, { new: true }).lean();
+        if (!user || !user.spaceId) {
+            res.json({ success: true, partner: null });
+            return;
+        }
+        const space = await CoupleSpace.findById(user.spaceId).lean();
+        if (!space) {
+            res.json({ success: true, partner: null });
+            return;
+        }
+        // Find the partner member in the couple space
+        const partnerMember = space.members.find((m) => m.userId.toString() !== userId.toString());
+        if (!partnerMember) {
+            res.json({ success: true, partner: null });
+            return;
+        }
+        const partnerUser = await User.findById(partnerMember.userId).lean();
+        if (!partnerUser) {
+            res.json({ success: true, partner: null });
+            return;
+        }
+        // Active within last 25 seconds = online
+        const partnerLastActive = partnerUser.lastActive ? new Date(partnerUser.lastActive).getTime() : 0;
+        const isOnline = Date.now() - partnerLastActive < 25000;
+        res.json({
+            success: true,
+            partner: {
+                userId: partnerUser._id,
+                name: partnerMember.displayName || partnerUser.name,
+                status: isOnline ? 'online' : 'offline',
+                lastActive: partnerUser.lastActive,
+            },
+        });
+    }
+    catch (error) {
+        console.error('Heartbeat error:', error);
+        res.status(500).json({ error: 'Heartbeat failed' });
+    }
+});
+// 9. Quick presence query
+router.get('/presence', authenticateToken, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const user = await User.findById(userId).lean();
+        if (!user || !user.spaceId) {
+            res.json({ partner: null });
+            return;
+        }
+        const space = await CoupleSpace.findById(user.spaceId).lean();
+        if (!space) {
+            res.json({ partner: null });
+            return;
+        }
+        const partnerMember = space.members.find((m) => m.userId.toString() !== userId.toString());
+        if (!partnerMember) {
+            res.json({ partner: null });
+            return;
+        }
+        const partnerUser = await User.findById(partnerMember.userId).lean();
+        if (!partnerUser) {
+            res.json({ partner: null });
+            return;
+        }
+        const partnerLastActive = partnerUser.lastActive ? new Date(partnerUser.lastActive).getTime() : 0;
+        const isOnline = Date.now() - partnerLastActive < 25000;
+        res.json({
+            partner: {
+                userId: partnerUser._id,
+                name: partnerMember.displayName || partnerUser.name,
+                status: isOnline ? 'online' : 'offline',
+                lastActive: partnerUser.lastActive,
+            },
+        });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Failed to fetch presence' });
+    }
+});
 export default router;

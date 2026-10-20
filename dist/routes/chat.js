@@ -13,19 +13,30 @@ const upload = multer({
 });
 router.use(authenticateToken);
 router.use(requireCoupleSpace);
-// 1. Get recent chat messages for couple space
+// 1. Get recent chat messages for couple space (supports delta sync via ?since=)
 router.get('/', async (req, res) => {
     try {
         const spaceId = req.user.spaceId;
         const userId = new Types.ObjectId(req.user.userId);
-        const messages = await ChatMessage.find({
+        const sinceParam = req.query.since ? new Date(String(req.query.since)) : null;
+        const query = {
             spaceId: new Types.ObjectId(spaceId),
             deletedFor: { $ne: userId },
-        })
+        };
+        if (sinceParam && !isNaN(sinceParam.getTime())) {
+            query.$or = [
+                { createdAt: { $gt: sinceParam } },
+                { updatedAt: { $gt: sinceParam } },
+            ];
+        }
+        const messages = await ChatMessage.find(query)
             .sort({ createdAt: 1 })
-            .limit(200)
+            .limit(300)
             .lean();
-        res.json({ messages });
+        res.json({
+            messages,
+            serverTime: new Date().toISOString(),
+        });
     }
     catch (error) {
         console.error('Fetch chat error:', error);

@@ -7,6 +7,8 @@ export interface IUser extends Document {
   passwordHash: string;
   spaceId?: Types.ObjectId;
   avatarUrl?: string;
+  lastActive?: Date;
+  isOnline?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,6 +39,14 @@ const UserSchema = new Schema<IUser>(
     avatarUrl: {
       type: String,
       default: '',
+    },
+    lastActive: {
+      type: Date,
+      default: Date.now,
+    },
+    isOnline: {
+      type: Boolean,
+      default: false,
     },
   },
   {

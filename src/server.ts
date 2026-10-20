@@ -59,7 +59,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
     app: 'Heartly',
-    version: '1.2.0',
+    version: '1.2.1',
     storage: 'MongoDB + MongoDB GridFS',
     time: new Date().toISOString(),
   });
@@ -67,7 +67,7 @@ app.get('/api/health', (req, res) => {
 
 app.get('/api/version', (req, res) => {
   res.json({
-    version: '1.2.0',
+    version: '1.2.1',
     app: 'Heartly',
     name: 'Heartly Sanctuary',
   });

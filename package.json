@@ -1,6 +1,6 @@
 {
   "name": "heartly",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Heartly - Private, secure couples app with shared gallery and real-time collaborative scratchbook powered entirely by MongoDB",
   "main": "electron/main.cjs",

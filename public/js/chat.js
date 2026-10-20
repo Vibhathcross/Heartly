@@ -98,6 +98,7 @@ const ChatManager = {
     await this.loadMagicWords();
     this.updatePinnedCount();
     this.markChatAsRead();
+    this.startLiveSync();
   },
 
   setupEvents() {
@@ -1282,6 +1283,67 @@ const ChatManager = {
     `;
   },
 
+  liveSyncInterval: null,
+  lastSyncTime: null,
+
+  startLiveSync() {
+    if (this.liveSyncInterval) return;
+    this.lastSyncTime = new Date().toISOString();
+    // Live delta sync: pings every 1500ms for incoming whispers, media, and reactions
+    this.liveSyncInterval = setInterval(() => {
+      this.syncDelta();
+    }, 1500);
+  },
+
+  stopLiveSync() {
+    if (this.liveSyncInterval) {
+      clearInterval(this.liveSyncInterval);
+      this.liveSyncInterval = null;
+    }
+  },
+
+  async syncDelta() {
+    if (!API.getToken() || !API.isSpaceUnlocked()) return;
+    try {
+      const data = await API.getChatMessages(this.lastSyncTime);
+      if (data?.serverTime) {
+        this.lastSyncTime = data.serverTime;
+      }
+      const newOrUpdated = data?.messages || [];
+      if (!newOrUpdated.length) return;
+
+      const currentUserId = this.getCurrentUserId();
+      let hasNewAppend = false;
+
+      for (const msg of newOrUpdated) {
+        const existingIdx = this.messages.findIndex((m) => String(m._id) === String(msg._id));
+        if (existingIdx >= 0) {
+          const oldMsg = this.messages[existingIdx];
+          const oldReactions = JSON.stringify(oldMsg.reactions || []);
+          const newReactions = JSON.stringify(msg.reactions || []);
+          if (
+            oldReactions !== newReactions ||
+            oldMsg.status !== msg.status ||
+            oldMsg.isPinned !== msg.isPinned ||
+            oldMsg.isDeleted !== msg.isDeleted
+          ) {
+            this.messages[existingIdx] = msg;
+            this.updateBubbleDOM(msg._id);
+          }
+        } else {
+          this.appendMessage(msg);
+          hasNewAppend = true;
+        }
+      }
+
+      if (hasNewAppend) {
+        this.scrollToBottom();
+      }
+    } catch (e) {
+      // Background sync non-blocking catch
+    }
+  },
+
   async loadMessages() {
     const container = document.getElementById('chatMessages');
     if (!container) return;
@@ -1289,6 +1351,11 @@ const ChatManager = {
     try {
       const data = await API.getChatMessages();
       this.messages = data.messages || [];
+      if (data?.serverTime) {
+        this.lastSyncTime = data.serverTime;
+      } else {
+        this.lastSyncTime = new Date().toISOString();
+      }
       this.render();
       this.updatePinnedCount();
     } catch (err) {

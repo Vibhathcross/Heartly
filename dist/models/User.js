@@ -25,6 +25,14 @@ const UserSchema = new Schema({
         type: String,
         default: '',
     },
+    lastActive: {
+        type: Date,
+        default: Date.now,
+    },
+    isOnline: {
+        type: Boolean,
+        default: false,
+    },
 }, {
     timestamps: true,
 });

@@ -23,6 +23,7 @@ const ScratchbookManager = {
 
   // Active Context Menu State
   activeStickyId: null,
+  liveSyncInterval: null,
 
   init() {
     if (this.initialized) return;
@@ -41,6 +42,39 @@ const ScratchbookManager = {
     this.setupStickyContextMenu();
     this.setupBackgroundColorPicker();
     this.setupBookManagement();
+    this.startLiveSync();
+  },
+
+  startLiveSync() {
+    if (this.liveSyncInterval) return;
+    this.liveSyncInterval = setInterval(() => {
+      this.syncScratchbook();
+    }, 3500);
+  },
+
+  stopLiveSync() {
+    if (this.liveSyncInterval) {
+      clearInterval(this.liveSyncInterval);
+      this.liveSyncInterval = null;
+    }
+  },
+
+  async syncScratchbook() {
+    if (!API.getToken() || !API.isSpaceUnlocked() || this.isDrawing) return;
+    const sbSection = document.getElementById('scratchbookSection');
+    if (!sbSection || sbSection.style.display === 'none') return;
+
+    try {
+      const targetId = this.currentBookId || localStorage.getItem('heartly_active_scratchbook_id');
+      if (!targetId) return;
+      const data = await API.getScratchbook(targetId);
+      const sb = data?.scratchbook;
+      if (!sb) return;
+
+      if (sb.version && sb.version !== this.version) {
+        this.loadScratchbook(sb._id);
+      }
+    } catch (e) {}
   },
 
   resizeCanvas() {

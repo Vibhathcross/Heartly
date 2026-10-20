@@ -134,6 +134,17 @@ const API = {
     });
   },
 
+  // Real-Time Heartbeat & Presence API
+  async sendHeartbeat() {
+    return await this.request('/auth/heartbeat', {
+      method: 'POST',
+    });
+  },
+
+  async getPresence() {
+    return await this.request('/auth/presence');
+  },
+
   // Gallery API (MongoDB GridFS)
   async uploadMemory(formData) {
     return await this.request('/gallery/upload', {
@@ -245,8 +256,9 @@ const API = {
   },
 
   // Private Couple Chat API
-  async getChatMessages() {
-    return await this.request('/chat');
+  async getChatMessages(since = null) {
+    const endpoint = since ? `/chat?since=${encodeURIComponent(since)}` : '/chat';
+    return await this.request(endpoint);
   },
 
   async sendChatMessage(text, replyTo = null) {

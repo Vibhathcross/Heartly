@@ -685,6 +685,43 @@ const App = {
     // Init Ema AI Floating Assistant (Visible on all tabs except Personal Space)
     window.HeartlyAiAssistant?.init();
     window.HeartlyAiAssistant?.updateTabVisibility('chat');
+
+    // Start Live Presence Heartbeat across devices via MongoDB Atlas
+    this.startPresenceHeartbeat();
+  },
+
+  presenceHeartbeatInterval: null,
+  lastKnownPartnerStatus: null,
+
+  startPresenceHeartbeat() {
+    if (this.presenceHeartbeatInterval) {
+      clearInterval(this.presenceHeartbeatInterval);
+    }
+
+    const runHeartbeat = async () => {
+      if (!API.getToken() || !API.isSpaceUnlocked()) return;
+      try {
+        const res = await API.sendHeartbeat();
+        if (res && res.partner) {
+          const partnerData = res.partner;
+          if (window.SocketManager) {
+            window.SocketManager.updatePartnerPresenceUI(partnerData);
+          }
+
+          if (partnerData.status === 'online' && this.lastKnownPartnerStatus === 'offline') {
+            if (window.HeartlyDialog) {
+              HeartlyDialog.toast(`❤️ ${partnerData.name} just stepped into your sanctuary!`, 'info');
+            }
+          }
+          this.lastKnownPartnerStatus = partnerData.status;
+        }
+      } catch (err) {
+        // Non-blocking heartbeat
+      }
+    };
+
+    runHeartbeat();
+    this.presenceHeartbeatInterval = setInterval(runHeartbeat, 5000);
   },
 
   updateHeaderBadges() {

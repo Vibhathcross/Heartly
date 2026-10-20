@@ -11,6 +11,8 @@ const DreamsManager = {
   selectedPhotoFile: null,
   isInitialized: false,
   isSubmitting: false,
+  liveSyncInterval: null,
+  lastDreamsSnapshot: '',
 
   async init() {
     if (!this.isInitialized) {
@@ -18,6 +20,47 @@ const DreamsManager = {
       this.isInitialized = true;
     }
     await this.loadDreams();
+    this.startLiveSync();
+  },
+
+  startLiveSync() {
+    if (this.liveSyncInterval) return;
+    this.liveSyncInterval = setInterval(() => {
+      this.syncDreams();
+    }, 3000);
+  },
+
+  stopLiveSync() {
+    if (this.liveSyncInterval) {
+      clearInterval(this.liveSyncInterval);
+      this.liveSyncInterval = null;
+    }
+  },
+
+  async syncDreams() {
+    if (!API.getToken() || !API.isSpaceUnlocked()) return;
+    const modal = document.getElementById('modalHangDream');
+    if (modal && modal.style.display !== 'none') return;
+
+    try {
+      const res = await API.getDreams();
+      const newDreams = res?.dreams || [];
+      const snapshot = JSON.stringify(
+        newDreams.map((d) => ({
+          id: d._id,
+          title: d.title,
+          isCompleted: d.isCompleted,
+          updatedAt: d.updatedAt,
+          notes: (d.notes || []).length,
+        }))
+      );
+
+      if (snapshot !== this.lastDreamsSnapshot) {
+        this.lastDreamsSnapshot = snapshot;
+        this.dreams = newDreams;
+        this.renderAll();
+      }
+    } catch (e) {}
   },
 
   bindEvents() {
